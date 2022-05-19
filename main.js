@@ -4,7 +4,7 @@ const FOOD_DECAY_PER_HOUR = 10000; // For debugging
 main();
 
 function main() {
-    // Saves the last unix timestamp in the local storage when the window is closed.
+    // Saves the last unix timestamp in the local storage when the window is closed
     window.onbeforeunload = saveLastTimeStamp;
 
     refresh();
@@ -25,7 +25,15 @@ function refresh() {
 }
 
 function refreshUi() {
-    document.getElementById("foodBar").value = getFood();
+    const food = getFood();
+
+    if (food <= FOOD_MIN_VALUE) {
+        document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
+    } else {
+        document.getElementById("rabbit").src = "images/rabbit_idle.gif";
+    }
+
+    document.getElementById("foodBar").value = food;
 }
 
 function updateFood(hoursPassed) {

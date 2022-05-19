@@ -1,4 +1,5 @@
 const FOOD_DEFAULT_VALUE = 100;
+const FOOD_MIN_VALUE = 50;
 
 function getFood() {
     let food = localStorage.getItem("food");
