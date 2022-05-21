@@ -12,6 +12,10 @@
                         <progress id="foodBar" value="0" max="100"></progress>
                         <span>Food 🍴</span>
                     </div>
+                    <div>
+                        <progress id="powerBar" value="0" max="100"></progress>
+                        <span>Power 🔋</span>
+                    </div>
                     <p>Bar 2</p>
                     <p>Bar 3</p>
                 </div>
@@ -23,7 +27,8 @@
                 </div>
                 <div id="right-actions">
                     <button onclick="onFeedClicked()">Feed</button>
-                    <p>Action 2</p>
+                    <button id="sleep-or-wake-up" class="sleep" onclick="onSleepOrWakeUpClicked()"></button>
+
                     <p>Action 3</p>
                     <p>Action 4</p>
                     <p>Action 5</p>
