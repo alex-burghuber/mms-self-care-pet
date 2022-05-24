@@ -15,11 +15,26 @@ body {
     flex-direction: column;
 
     align-items: stretch;;
+    /* position: absolute;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    background-color: black; */
+}
+
+h1{
+    /* justify-content: center; */
+    text-align: center;
 }
 
 #header {
     display: flex;
     justify-content: center;
+}
+
+#bars {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
 #content {
@@ -79,4 +94,38 @@ body {
     background-color: rgb(255, 11, 52);
     font-size: 0,6em;
     font-weight: bold;
+}
+
+
+/* #sport {
+    width: 40vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.circle {
+    margin: 1vh 2vw;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid black;
+
+}
+
+.bar{
+    background-color: aquamarine;
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progres{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 40vw;
 }

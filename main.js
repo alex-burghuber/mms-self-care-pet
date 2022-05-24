@@ -1,11 +1,10 @@
-// const FOOD_DECAY_PER_HOUR = DEFAULT_VALUE / 24; // Assumes food is empty after 24 hours
-// const POWER_DECAY_PER_HOUR = DEFAULT_VALUE /24; // Assumes power is empty after 24 hours
-const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
+const FOOD_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / 24; // Assumes food is empty after 24 hours
+const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE /24; // Assumes power is empty after 24 hours
+//const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
-// const ASCEND_PER_HOUR = DEFAULT_VALUE / 8; // Assumes power is full after 8 hours
-const ASCEND_PER_HOUR = 50000; // for debugging 
+const POWER_ASCEND_PER_HOUR = DEFAULT_MAX_VALUE / 8; // Assumes power is full after 8 hours
+//const ASCEND_PER_HOUR = 50000; // for debugging 
 
-var sleeping;
 
 main();
 
@@ -43,7 +42,7 @@ function refreshUi() {
         document.getElementById("rabbit").src = "images/rabbit_idle.gif";
     }
 
-    if (sleeping){
+    if (getSleeping()){
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
        if (power == DEFAULT_MAX_VALUE) {
             document.getElementById("rabbit").src = "images/rabbit_jump.gif";
@@ -80,16 +79,16 @@ function refreshUi() {
 }
 
 function updateFood(hoursPassed) {
-    const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
+    const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
 }
 
 function updatePower(hoursPassed) {
-    if(sleeping){  
-        const newPower = linearAscend(getPower(), ASCEND_PER_HOUR, hoursPassed);
+    if(getSleeping()){  
+        const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
-        const newPower = linearDecay(getPower(), DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
         savePower(newPower); 
     }
 }
@@ -135,7 +134,7 @@ function onFeedClicked() {
 }
 
 function onSleepOrWakeUpClicked() {
-   if (sleeping) {
+   if (getSleeping()) {
         wakeUp();
     } else {
         sleep();
@@ -144,13 +143,13 @@ function onSleepOrWakeUpClicked() {
 }
 
 function sleep() {
-    sleeping = true;
-    document.getElementById("sleep-or-wake-up").classList.replace("sleep", "wake-up");  
+    saveSleeping(true);
+    document.getElementById("sleep-or-wake-up").classList.replace("sleep", "wake-up");
     refresh();
 }
 
 function wakeUp() {
-    sleeping = false;
+    saveSleeping(false);
     document.getElementById("sleep-or-wake-up").classList.replace("wake-up", "sleep");
     refresh();
 }
