@@ -1,7 +1,6 @@
 // const FOOD_DECAY_PER_HOUR = DEFAULT_VALUE / 24; // Assumes food is empty after 24 hours
 // const POWER_DECAY_PER_HOUR = DEFAULT_VALUE /24; // Assumes power is empty after 24 hours
 const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
-
 // const ASCEND_PER_HOUR = DEFAULT_VALUE / 8; // Assumes power is full after 8 hours
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
@@ -25,6 +24,7 @@ function refresh() {
    // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
 
     updateFood(hoursPassed);
+    updateHydration(hoursPassed);
     updatePower(hoursPassed);
     saveLastTimeStamp();
 
@@ -35,13 +35,21 @@ function refreshUi() {
     
     const food = getFood();
     const power = getPower();
-
+    const hydration = getHydration();
 
     if (food <= FOOD_MIN_VALUE) { //hungry
         document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
     }  else {
         document.getElementById("rabbit").src = "images/rabbit_idle.gif";
     }
+
+    //thirsty
+    if (hydration <= HYDRATION_MIN_VALUE) { 
+        document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
+    }  else {
+        document.getElementById("rabbit").src = "images/rabbit_idle.gif";
+    }
+
 
     if (sleeping){
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -68,14 +76,13 @@ function refreshUi() {
         document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked; 
         document.getElementById("sleep-or-wake-up").innerHTML = "💤💤<br>SLEEP";
         document.getElementById("sleep-or-wake-up").style.boxShadow = "";  
-    } else { // tiered, it falls asleep
+    } else { // tired, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
         sleep();
     }
-    
-    
 
     document.getElementById("foodBar").value = food;
+    document.getElementById("hydrationBar").value = hydration;
     document.getElementById("powerBar").value = power;
 }
 
@@ -83,7 +90,10 @@ function updateFood(hoursPassed) {
     const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
 }
-
+function updateHydration(hoursPassed) {
+    const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR*4, hoursPassed);
+    saveHydration(newhydration);
+}
 function updatePower(hoursPassed) {
     if(sleeping){  
         const newPower = linearAscend(getPower(), ASCEND_PER_HOUR, hoursPassed);
@@ -130,10 +140,17 @@ function currentTimestampInSeconds() {
 }
 
 function onFeedClicked() {
-    saveFood(DEFAULT_MAX_VALUE);
-    refresh();
+    if(!sleeping){
+        saveFood(DEFAULT_MAX_VALUE);
+        refresh();
+    }
 }
-
+function onHydrateClicked() {
+    if(!sleeping){
+        saveHydration(DEFAULT_MAX_VALUE);
+        refresh();
+    }else {refresh()}
+}
 function onSleepOrWakeUpClicked() {
    if (sleeping) {
         wakeUp();

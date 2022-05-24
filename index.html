@@ -16,7 +16,10 @@
                         <progress id="powerBar" value="0" max="100"></progress>
                         <span>Power 🔋</span>
                     </div>
-                    <p>Bar 2</p>
+                    <div>
+                        <progress id="hydrationBar" value="0" max="100"></progress>
+                        <span>Hydration 💧</span>
+                    </div>
                     <p>Bar 3</p>
                 </div>
             </div>
@@ -27,12 +30,11 @@
                 </div>
                 <div id="right-actions">
                     <button onclick="onFeedClicked()">Feed</button>
+                    <button onclick="onHydrateClicked()">Drink Water</button>
                     <button id="sleep-or-wake-up" class="sleep" onclick="onSleepOrWakeUpClicked()"></button>
-
                     <p>Action 3</p>
                     <p>Action 4</p>
                     <p>Action 5</p>
-                    <p>Action 6</p>
                 </div>
             </div>
         </div>
