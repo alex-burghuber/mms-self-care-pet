@@ -1,6 +1,6 @@
 const DEFAULT_MAX_VALUE = 100; // default for all bars at max
-const FOOD_MIN_VALUE = 50;
 const HYDRATION_MIN_VALUE=50;
+const FOOD_MIN_VALUE = 50;
 
 const POWER_MIN_VALUE = 10;
 const POWER_MIDI_VALUE = 60; 
@@ -16,6 +16,16 @@ function getFood() {
     return food;
 }
 
+function saveFood(value) {
+    if (value < 0) {
+        value = 0;
+    } else if (value > DEFAULT_MAX_VALUE) {
+        value = DEFAULT_MAX_VALUE;
+    }
+    localStorage.setItem("food", value);
+}
+
+//hydration functions
 function getHydration() {
     let hydration = localStorage.getItem("hydration");
     if (hydration === null) {
@@ -25,7 +35,14 @@ function getHydration() {
     }
     return hydration;
 }
-
+function saveHydration(value) {
+    if (value < 0) {
+        value = 0;
+    } else if (value > DEFAULT_MAX_VALUE) {
+        value = DEFAULT_MAX_VALUE;
+    }
+    localStorage.setItem("hydration", value);
+}
 //power functions
 function getPower() {
     let power = localStorage.getItem("power");
@@ -37,23 +54,6 @@ function getPower() {
     return power;
 }
 
-//save 
-function saveFood(value) {
-    if (value < 0) {
-        value = 0;
-    } else if (value > DEFAULT_MAX_VALUE) {
-        value = DEFAULT_MAX_VALUE;
-    }
-    localStorage.setItem("food", value);
-}
-function saveHydration(value) {
-    if (value < 0) {
-        value = 0;
-    } else if (value > DEFAULT_MAX_VALUE) {
-        value = DEFAULT_MAX_VALUE;
-    }
-    localStorage.setItem("hydration", value);
-}
 function savePower(value) {
     if (value < 0) {
         value = 0;
@@ -61,4 +61,16 @@ function savePower(value) {
         value = DEFAULT_MAX_VALUE;
     }
     localStorage.setItem("power", value);
+}
+
+function getSleeping () {
+    let sleeping = localStorage.getItem("sleeping");
+    if (sleeping === null) {
+        saveSleeping(false);
+        sleeping = localStorage.getItem("sleeping");
+    }
+    return sleeping;
+}
+function saveSleeping(value) {
+    localStorage.setItem("sleeping", value);
 }
