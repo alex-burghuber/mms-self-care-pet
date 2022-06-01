@@ -1,16 +1,32 @@
+
+const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
+
 const FOOD_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes food is empty after 24 hours
 const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR /24; // Assumes power is empty after 24 hours
-const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
 const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR / 8; // Assumes power is full after 8 hours
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
 main();
 
+
+var sleeping;
+function setSleeping() {
+    if(localStorage.getItem("sleeping") == 1){
+        sleeping = true;
+    } else {
+        sleeping = false;
+    }
+}
+
+
+
 function main() {
     // Saves the last unix timestamp in the local storage when the window is closed
     window.onbeforeunload = saveLastTimeStamp;
 
+
+    setSleeping();
     refresh();
     
     // setInterval(refresh, 10000); // Calls refresh every 10 seconds
@@ -38,18 +54,19 @@ function refreshUi() {
 
     if (food <= FOOD_MIN_VALUE) { //hungry
         document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
-    }  else {
-        document.getElementById("rabbit").src = "images/rabbit_idle.gif";
-    }
+    } else if (food == FOOD_MIN_VALUE) {
+       if (confirm("I'm hungry! Do you want to eat something?")) {
+        onFeedClicked();
+       }
 
-     //thirsty
-     if (hydration <= HYDRATION_MIN_VALUE) { 
+    } else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
         document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
     }  else {
         document.getElementById("rabbit").src = "images/rabbit_idle.gif";
     }
 
-    if (getSleeping()){
+
+    if (sleeping){
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
        if (power == DEFAULT_MAX_VALUE) {
             document.getElementById("rabbit").src = "images/rabbit_jump.gif";
@@ -65,7 +82,14 @@ function refreshUi() {
             document.getElementById("sleep-or-wake-up").style.boxShadow = "none"; 
         }
     } else if (power > POWER_MIDI_VALUE) { // too activ, can´t sleep
-        document.getElementById("rabbit").src = "images/rabbit_vibing.gif";
+        if (food <= FOOD_MIN_VALUE) { //hungry
+            document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
+        }  else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
+            document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
+            notifyMe();
+        }  else {
+            document.getElementById("rabbit").src = "images/rabbit_vibing.gif";
+        }
         document.getElementById("sleep-or-wake-up").onclick = "";
         document.getElementById("sleep-or-wake-up").innerHTML = ""; 
         document.getElementById("sleep-or-wake-up").style.boxShadow = "none";  
@@ -87,7 +111,7 @@ function refreshUi() {
 }
 
 function updateFood(hoursPassed) {
-    const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR, hoursPassed);
+    const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR*100, hoursPassed);
     saveFood(newFood);
 }
 function updateHydration(hoursPassed) {
@@ -96,11 +120,11 @@ function updateHydration(hoursPassed) {
 }
 
 function updatePower(hoursPassed) {
-    if(getSleeping()){  
+    if(sleeping){  
         const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
-        const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR*100, hoursPassed);
         savePower(newPower); 
     }
 }
@@ -141,19 +165,19 @@ function currentTimestampInSeconds() {
 }
 
 function onFeedClicked() {
-    if(!getSleeping()){
+    if(!sleeping){
         saveFood(DEFAULT_MAX_VALUE);
         refresh();
     }
 }
 function onHydrateClicked() {
-    if(!getSleeping()){
+    if(!sleeping){
         saveHydration(DEFAULT_MAX_VALUE);
         refresh();
     }else {refresh()}
 }
 function onSleepOrWakeUpClicked() {
-   if (getSleeping()) {
+   if (sleeping) {
         wakeUp();
     } else {
         sleep();
@@ -162,13 +186,29 @@ function onSleepOrWakeUpClicked() {
 }
 
 function sleep() {
-    saveSleeping(true);
+    localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
+    sleeping = true;
     document.getElementById("sleep-or-wake-up").classList.replace("sleep", "wake-up");
+    buttonOff( 
+        document.getElementById("feed"), 
+        document.getElementById("make-sport"), 
+        document.getElementById("sleep-or-wake-up"),
+        document.getElementById("drink")
+        );
     refresh();
 }
 
 function wakeUp() {
-    saveSleeping(false);
+    localStorage.setItem("sleeping", 0); //for set sleeping when reload the page
+    sleeping = false;
     document.getElementById("sleep-or-wake-up").classList.replace("wake-up", "sleep");
     refresh();
+}
+
+
+
+function buttonOff (buttonElement){
+        buttonElement.onclick = "";
+        buttonElement.innerHTML = "";
+        buttonElement.style.boxShadow = "none"; 
 }

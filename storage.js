@@ -63,14 +63,14 @@ function savePower(value) {
     localStorage.setItem("power", value);
 }
 
-function getSleeping () {
-    let sleeping = localStorage.getItem("sleeping");
-    if (sleeping === null) {
-        saveSleeping(false);
-        sleeping = localStorage.getItem("sleeping");
-    }
-    return sleeping;
-}
-function saveSleeping(value) {
-    localStorage.setItem("sleeping", value);
-}
+// function getSleeping () {
+//     let sleeping = localStorage.getItem("sleeping");
+//     if (sleeping === null) {
+//         saveSleeping(false);
+//         sleeping = localStorage.getItem("sleeping");
+//     }
+//     return sleeping;
+// }
+// function saveSleeping(value) {
+//     localStorage.setItem("sleeping", value);
+// }
