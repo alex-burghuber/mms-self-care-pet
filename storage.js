@@ -3,7 +3,8 @@ const HYDRATION_MIN_VALUE=50;
 const FOOD_MIN_VALUE = 50;
 
 const POWER_MIN_VALUE = 10;
-const POWER_MIDI_VALUE = 60; 
+const POWER_TO_ACTIV_VALUE = 90;
+const POWER_FIT_TO_WAKE_UP_VALUE = 20; 
 
 // food functions
 function getFood() {

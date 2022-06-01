@@ -8,14 +8,6 @@ const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR / 8; // Assumes power is full after
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
 
-//-----------------------
-const feedB = document.getElementById('feed');
-const wasserB = document.getElementById('drink');
-const sleepB =document.getElementById('sleep-or-wake-up');
-const sportB = document.getElementById('make-sport'); 
-// ----------------------
-
-
 
 
 main();
@@ -74,35 +66,52 @@ function refreshUi() {
 
     if (sleeping){
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
-        // setButtonDonw();
-        document.getElementById("feed").classList.add('press');
-        // document.getElementById("feed").classList.add('press:hover');
+        
+        setButtonDonw();
+
        if (power == DEFAULT_MAX_VALUE) {
             document.getElementById("rabbit").src = "images/rabbit_jump.gif";
             wakeUp();
-        } else if (power > POWER_MIDI_VALUE ) { //it is fit to wake up
+        } else if (power > POWER_FIT_TO_WAKE_UP_VALUE ) { //it is fit to wake up
+            
+            document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked;
             document.getElementById("sleep-or-wake-up").innerHTML = "⏰🌄<br>WAKE UP";
+            document.getElementById("sleep-or-wake-up").classList.remove('press');
+
             
         } else { // too tiered to wake up
-            document.getElementById("sleep-or-wake-up").innerHTML = "";  
+            document.getElementById("sleep-or-wake-up").onclick = "";
+            document.getElementById("sleep-or-wake-up").innerHTML = "";
+            document.getElementById("sleep-or-wake-up").classList.add('press');
+
         }
 
-    } else if (power > POWER_MIDI_VALUE) { // too activ, can´t sleep
+    } else if (power > POWER_TO_ACTIV_VALUE) { // too activ, can´t sleep
+
+        setButtonUp();
+
         if (food <= FOOD_MIN_VALUE) { //hungry
             document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
         }  else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
             document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
-            notifyMe();
+       
         }  else {
             document.getElementById("rabbit").src = "images/rabbit_vibing.gif";
         }
-        
-        document.getElementById("sleep-or-wake-up").innerHTML = "";  
-  
+
+        document.getElementById("sleep-or-wake-up").onclick = "";
+        document.getElementById("sleep-or-wake-up").innerHTML = "";
+        // document.getElementById("sleep-or-wake-up").classList.add('press');
+
 
     } else if (power > POWER_MIN_VALUE) { // it can try to sleep
 
+        document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked; 
         document.getElementById("sleep-or-wake-up").innerHTML = "💤💤<br>SLEEP";
+        // document.getElementById("sleep-or-wake-up").classList.remove('press');
+
+
+        setButtonUp();
  
     } else { // tiered, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -115,20 +124,20 @@ function refreshUi() {
 }
 
 function updateFood(hoursPassed) {
-    const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR*100, hoursPassed);
+    const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
 }
 function updateHydration(hoursPassed) {
-    const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR*4, hoursPassed);
+    const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR, hoursPassed);
     saveHydration(newhydration);
 }
 
 function updatePower(hoursPassed) {
     if(sleeping){  
-        const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR*10, hoursPassed);
+        const newPower = linearAscend(getPower(), DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
-        const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR*100, hoursPassed);
+        const newPower = linearDecay(getPower(), DECAY_PER_HOUR, hoursPassed);
         savePower(newPower); 
     }
 }
@@ -196,19 +205,21 @@ function sleep() {
     refresh();
 }
 
-
-
-
-function setButtonDonw () {
-    feedB.style.boxShadow = '3px 5px rgb(92, 100, 75) inset';
-    wasserB.style.boxShadow = '3px 5px rgb(92, 100, 75) inset';
-    sleepB.style.boxShadow = '3px 5px rgb(92, 100, 75) inset';
-    sportB.style.boxShadow = '3px 5px rgb(92, 100, 75) inset';
-}
-
 function wakeUp() {
     localStorage.setItem("sleeping", 0); //for set sleeping when reload the page
     sleeping = false;
     
     refresh();
+}
+
+function setButtonDonw() {
+    document.getElementById("feed").classList.add('press');
+    document.getElementById("drink").classList.add('press');
+    document.getElementById("make-sport").classList.add('press');
+}
+
+function setButtonUp() {
+    document.getElementById("feed").classList.remove('press');
+    document.getElementById("drink").classList.remove('press');
+    document.getElementById("make-sport").classList.remove('press');
 }

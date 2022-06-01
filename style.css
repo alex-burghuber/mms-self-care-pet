@@ -225,6 +225,7 @@ progress[value]::-webkit-progress-bar {
 } 
 .press:hover{
     border-color: blue;
+    color: blue;
     background-color: rgb(11, 145, 255);
 }
 
