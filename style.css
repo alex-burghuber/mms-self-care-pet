@@ -1,3 +1,56 @@
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -5,37 +58,122 @@
 body {
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    /* position: absolute; */
+    /* filter: alpha(opacity=50); */
+    /* opacity: 0.5; */
+    background-color: black;
 }
 
 #root {
-    width: 100vw;
+    width: 90vw;
     height: 100vh;
 
     display: flex;
     flex-direction: column;
+    
+    align-items: stretch;
+    
+    background-image: url(images/background.jfif);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
 
-    align-items: stretch;;
-    /* position: absolute;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-    background-color: black; */
-}
-
-h1{
-    /* justify-content: center; */
-    text-align: center;
 }
 
 #header {
+    height: 45vh;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#panel{
+   margin-top: 4vh;
+    width: 60vw;
+    height: 40vh;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid chocolate;
+    border-radius: 40px;
+    box-shadow: 3px 3px 4px 2px black;
+    background-color: burlywood;
+}
+
+h1{
+    font-size: 1.6em;
+    font-weight: bolder;
+    line-height: 4vh;
+    text-shadow: 2px 2px 2px grey;
 }
 
 #bars {
+    width: 58vw;
+    height: 34vh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     flex-direction: column;
 }
+
+.bar{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    background-color: antiquewhite;
+}
+
+.progres{
+    margin-top: 1vh;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 58vw;
+}
+
+/*----progres bar style----*/
+
+progress[value] {
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+     appearance: none;
+     box-sizing: border-box;
+}
+  
+progress[value]::-webkit-progress-bar {
+    background-color: antiquewhite;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5) inset;
+}
+  
+  progress[value]::-webkit-progress-value {
+    background-image:
+       -webkit-linear-gradient(-45deg, 
+                              transparent 40%, rgba(0, 128, 0, 0.1) 40%, 
+                              rgba(0, 128, 0, 0.1) 66%, transparent 66%),
+      -webkit-linear-gradient(top, 
+                              rgba(248, 238, 238, 0.212), 
+                              rgba(0, 0, 0, .25)),
+      -webkit-linear-gradient(left, green, chartreuse);
+
+    border-radius: 20px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+  }
+
+
+/*--------------------------- */
 
 #content {
     display: flex;
@@ -45,34 +183,73 @@ h1{
 }
 
 #left-actions {
-    width: 200px;
+    width: 25vw;
 }
 
 #right-actions {
-    width: 200px;
+    width: 25vw;
   
-
     display: flex;
     flex-direction: column; 
     justify-content: center;
     align-items: center;
 }
 
+ .button{
+    color: rgb(19, 2, 168);
+    justify-content: center;
+    margin: 10px;
+ 
+    width: 8vh;
+    height: 8vh;
+
+    box-shadow: 3px 5px rgb(100, 100, 100);
+    border-radius: 50% 20% / 10% 40%;
+    border-color: blue;
+    background-color: rgb(11, 145, 255);
+    font-size: 0,6em;
+    font-weight: bold;
+}
+
+.button:hover{
+    background-color: #83a9cc;
+    color: #FFF;
+}
+.button:active {
+    box-shadow: 3px 5px rgb(92, 100, 75) inset;
+}
+.press{
+    border-color: blue;
+    background-color: rgb(11, 145, 255);
+    box-shadow: 3px 5px rgb(92, 100, 75) inset;
+} 
+.press:hover{
+    border-color: blue;
+    background-color: rgb(11, 145, 255);
+}
 
 #pet-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    align-content:flex-end;
 }
+ #pet-wrapper img{
+     height: 50vh;
+ }
 
+
+
+
+
+/*---- buttons SLEEP and WAKE UP -----*/
 .sleep {
     color: rgb(30, 30, 130);
     justify-content: center;
     margin: 10px;
- /*
     width: 50px;
     height: 40px;
-*/   
+
     box-shadow: 2px 3px;
     border-radius: 15%;
     border-color: blue;
@@ -84,10 +261,7 @@ h1{
     color: rgb(250, 250, 50);
     justify-content: center;
     margin: 10px;
- /*
-    width: 80px;
-    height: 60px;
-*/
+
     box-shadow: 3px 5px;
     border-radius: 15%;
     border-color: blue;
@@ -96,27 +270,17 @@ h1{
     font-weight: bold;
 }
 
-.circle {
-    margin: 1vh 2vw;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1px solid black;
-
+/*-----  css botton  -----*/
+#botton {
+    position: absolute;
+    bottom: 1vh;
+    width: 90vw;
+    text-align: center;
+    font-size: 1vh;
+    color: burlywood;
 }
 
-.bar{
-    background-color: aquamarine;
-    width: 50vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.progres{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 40vw;
+#botton p {
+    font-size: 0.8vh;
+    font-style: italic;
 }
