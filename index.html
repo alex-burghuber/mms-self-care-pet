@@ -5,13 +5,14 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id="banner-wrapper"></div>
         <div id="root">
             <div id="h1">
                 
             </div>
             <div id="header">
                 <div id="panel">
-                    <h1>COOL NAME</h1>
+                    <h1 id="name" onclick="onEditName()">COOL NAME</h1>
                     <div id="bars">
                         <div class="bar">
                             <span>Food 🍴</span>
@@ -27,7 +28,7 @@
                         </div>
     
                         <div class="bar">
-                            <samp>Sport 💪</samp>
+                            <samp>Sport 3x per week 💪</samp>
                             <div class="progres">
                                 <div id="p1" class="circle"></div>
                                 <div id="p2" class="circle"></div>
@@ -44,17 +45,17 @@
                         <h1>ToDo's</h1>
                         <div>
                             <span>Eat a healthy meal:</span>
-                            <input id="meals" type=number value="3" min=0 max=5>
+                            <input id="meals" type=number value="5" min=0 max=5>
                         </div>
                         
                         <div>
-                            <span>Drink Water:</span>
-                            <input id="drinks" type=number value="9" min=0 max=10>
+                            <span>Drink  a glass of water:</span>
+                            <input id="drinks" type=number value="10" min=0 max=10>
                         </div>
                         
                         <div>
-                            <span>Exercise:</span>
-                            <input id="exercises" type=number value="3" min=0 max=3>
+                            <span>Exercise today:</span>
+                            <input id="exercises" type=number value="1" min=0 max=3>
                         </div>
                         <br>
                     </div>
@@ -67,18 +68,17 @@
                     <button id="feed" class="button" onclick="onFeedClicked()">Feed</button>
                     <button id="drink" class="button" onclick="onHydrateClicked()">Drink Water</button>
                     <button id="sleep-or-wake-up" class="button" class="sleep" onclick="onSleepOrWakeUpClicked()"></button>
-                    <button id="make-sport" class="button">Sport</button>              
+                    <button id="make-sport" class="button" onclick="onExerciseClicked()">Exercise</button>              
                 </div>
             </div>
             <div id="botton">
                 <h5>This is a projekt for MMS 2022 </h5>
                 <p>
-                    by Aleana Takacs, Arij Adbullah, Alexander burghuber, Julius Baischer, Daniel Aparicio
+                    by Aleana Takacs, Arij Adbullah, Alexander Burghuber, Julius Baischer, Daniel Aparicio
                 </p>
             </div>
         </div>
     </body>
     <script src="storage.js"></script>
     <script src="main.js"></script>
-    <script src="notifications.js"></script>
 </html>
