@@ -4,12 +4,13 @@ const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 const FOOD_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes food is empty after 24 hours
 const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes power is empty after 24 hours
 
-const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR / 8; // Assumes power is full after 8 hours
+const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR ; // Assumes power is full after 8 hours
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
 main();
 
 var sleeping;
+var tochange;
 function setSleeping() {
     if (localStorage.getItem("sleeping") == 1) {
         sleeping = true;
@@ -38,7 +39,7 @@ function refresh() {
     updateHydration(hoursPassed);
     updatePower(hoursPassed);
     saveLastTimeStamp();
-
+    
     refreshUi();
 }
 
@@ -119,7 +120,6 @@ function refreshUi() {
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
         sleep();
     }
-
     document.getElementById("hydrationBar").value = hydration;
     document.getElementById("foodBar").value = food;
     document.getElementById("powerBar").value = power;
@@ -235,13 +235,17 @@ function currentTimestampInSeconds() {
 
 function onFeedClicked() {
     if (!sleeping) {
+        tochange='meals';
+        decrement(tochange);
         saveFood(DEFAULT_MAX_VALUE);
         refresh();
     }
 }
 
 function onHydrateClicked() {
-    if (!sleeping) {
+    if(!sleeping){
+        tochange='drinks';
+        decrement(tochange);
         saveHydration(DEFAULT_MAX_VALUE);
         refresh();
     } else { refresh() }
@@ -254,11 +258,20 @@ function onSleepOrWakeUpClicked() {
         sleep();
     }
 }
+function decrement(tochange) {
+    document.getElementById(tochange).stepDown();
+}
 
 function sleep() {
     localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
     sleeping = true;
-    setButtonDonw();
+    document.getElementById("sleep-or-wake-up").classList.replace("sleep", "wake-up");
+    buttonOff( 
+        document.getElementById("feed"), 
+        document.getElementById("make-sport"), 
+        document.getElementById("sleep-or-wake-up"),
+        document.getElementById("drink")
+        );
     refresh();
 }
 
