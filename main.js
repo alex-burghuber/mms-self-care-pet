@@ -22,7 +22,6 @@ function main() {
     // Saves the last unix timestamp in the local storage when the window is closed
     window.onbeforeunload = saveLastTimeStamp;
 
-
     setSleeping();
     refresh();
 
@@ -44,11 +43,9 @@ function refresh() {
 }
 
 function refreshUi() {
-
     const food = getFood();
     const power = getPower();
     const hydration = getHydration();
-    const amountOfExercises = getExerciseDates().length;
 
     if (food <= FOOD_MIN_VALUE) { //hungry
         document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
@@ -57,7 +54,6 @@ function refreshUi() {
     } else {
         document.getElementById("rabbit").src = "images/rabbit_idle.gif";
     }
-
 
     if (sleeping) {
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -117,6 +113,8 @@ function refreshUi() {
     document.getElementById("foodBar").value = food;
     document.getElementById("powerBar").value = power;
     
+    const amountOfExercises = getExerciseDates().length;
+
     if (amountOfExercises === 3) {
         document.getElementById("p3").innerHTML = '✔️';
     }  else {
@@ -131,6 +129,14 @@ function refreshUi() {
         document.getElementById("p1").innerHTML = '✔️';
     } else {
         document.getElementById("p1").innerHTML = '';
+    }
+    
+
+    const name = getName();
+    if (name === null) {
+        document.getElementById("name").innerHTML = "Click to give me a name!";
+    } else {
+        document.getElementById("name").innerHTML = name;
     }
 }
 
@@ -208,7 +214,6 @@ function onSleepOrWakeUpClicked() {
     } else {
         sleep();
     }
-
 }
 
 function sleep() {
@@ -232,6 +237,12 @@ function onExerciseClicked() {
         }
         refresh();
     }
+}
+
+function onEditName() {
+    const name = prompt("Enter a new name here:");
+    saveName(name);
+    refresh();
 }
 
 function setButtonDonw() {

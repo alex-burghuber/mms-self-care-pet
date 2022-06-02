@@ -92,6 +92,14 @@ function getExerciseDates() {
     return newExerciseDates;
 }
 
+function saveName(newName) {
+    localStorage.setItem("name", newName);
+}
+
+function getName() {
+    return localStorage.getItem("name");
+}
+
 function isToday(date) {
     const today = new Date();
     return date.getDate() == today.getDate()
