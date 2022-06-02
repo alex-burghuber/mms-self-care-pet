@@ -2,27 +2,21 @@
 const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
 const FOOD_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes food is empty after 24 hours
-const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR /24; // Assumes power is empty after 24 hours
+const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes power is empty after 24 hours
 
 const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR / 8; // Assumes power is full after 8 hours
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
-
-
-
 main();
-
 
 var sleeping;
 function setSleeping() {
-    if(localStorage.getItem("sleeping") == 1){
+    if (localStorage.getItem("sleeping") == 1) {
         sleeping = true;
     } else {
         sleeping = false;
     }
 }
-
-
 
 function main() {
     // Saves the last unix timestamp in the local storage when the window is closed
@@ -31,7 +25,7 @@ function main() {
 
     setSleeping();
     refresh();
-    
+
     // setInterval(refresh, 10000); // Calls refresh every 10 seconds
     setInterval(refresh, 1000); // For debugging: Calls refresh every second
 }
@@ -39,7 +33,7 @@ function main() {
 function refresh() {
     const hoursPassed = getHoursPassedSinceLastTimestamp();
 
-   // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
+    // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
 
     updateFood(hoursPassed);
     updateHydration(hoursPassed);
@@ -50,35 +44,36 @@ function refresh() {
 }
 
 function refreshUi() {
-    
+
     const food = getFood();
     const power = getPower();
     const hydration = getHydration();
+    const amountOfExercises = getExerciseDates().length;
 
     if (food <= FOOD_MIN_VALUE) { //hungry
         document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
     } else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
         document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
-    }  else {
+    } else {
         document.getElementById("rabbit").src = "images/rabbit_idle.gif";
     }
 
 
-    if (sleeping){
+    if (sleeping) {
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
-        
+
         setButtonDonw();
 
-       if (power == DEFAULT_MAX_VALUE) {
+        if (power == DEFAULT_MAX_VALUE) {
             document.getElementById("rabbit").src = "images/rabbit_jump.gif";
             wakeUp();
-        } else if (power > POWER_FIT_TO_WAKE_UP_VALUE ) { //it is fit to wake up
-            
+        } else if (power > POWER_FIT_TO_WAKE_UP_VALUE) { //it is fit to wake up
+
             document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked;
             document.getElementById("sleep-or-wake-up").innerHTML = "⏰🌄<br>WAKE UP";
             document.getElementById("sleep-or-wake-up").classList.remove('press');
 
-            
+
         } else { // too tiered to wake up
             document.getElementById("sleep-or-wake-up").onclick = "";
             document.getElementById("sleep-or-wake-up").innerHTML = "";
@@ -92,10 +87,10 @@ function refreshUi() {
 
         if (food <= FOOD_MIN_VALUE) { //hungry
             document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
-        }  else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
+        } else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
             document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
-       
-        }  else {
+
+        } else {
             document.getElementById("rabbit").src = "images/rabbit_vibing.gif";
         }
 
@@ -106,42 +101,58 @@ function refreshUi() {
 
     } else if (power > POWER_MIN_VALUE) { // it can try to sleep
 
-        document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked; 
+        document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked;
         document.getElementById("sleep-or-wake-up").innerHTML = "💤💤<br>SLEEP";
         // document.getElementById("sleep-or-wake-up").classList.remove('press');
 
 
         setButtonUp();
- 
+
     } else { // tiered, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
         sleep();
     }
-    
+
     document.getElementById("hydrationBar").value = hydration;
     document.getElementById("foodBar").value = food;
     document.getElementById("powerBar").value = power;
+    
+    if (amountOfExercises === 3) {
+        document.getElementById("p3").innerHTML = '✔️';
+    }  else {
+        document.getElementById("p3").innerHTML = '';
+    }
+    if (amountOfExercises >= 2) {
+        document.getElementById("p2").innerHTML = '✔️';
+    } else {
+        document.getElementById("p2").innerHTML = '';
+    }
+    if (amountOfExercises >= 1) {
+        document.getElementById("p1").innerHTML = '✔️';
+    } else {
+        document.getElementById("p1").innerHTML = '';
+    }
 }
 
 function updateFood(hoursPassed) {
     const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
 }
+
 function updateHydration(hoursPassed) {
     const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR, hoursPassed);
     saveHydration(newhydration);
 }
 
 function updatePower(hoursPassed) {
-    if(sleeping){  
+    if (sleeping) {
         const newPower = linearAscend(getPower(), DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
         const newPower = linearDecay(getPower(), DECAY_PER_HOUR, hoursPassed);
-        savePower(newPower); 
+        savePower(newPower);
     }
 }
-
 
 function getHoursPassedSinceLastTimestamp() {
     return (currentTimestampInSeconds() - localStorage.getItem("last_timestamp")) / 3600
@@ -169,7 +180,7 @@ function linearDecay(currentValue, decayPerHour, hour) {
  * @param {number} hour t
  * @returns Current value
  */
- function linearAscend(currentValue, ascendPerHour, hour) {
+function linearAscend(currentValue, ascendPerHour, hour) {
     return parseFloat(currentValue) + parseFloat(ascendPerHour * hour);
 }
 
@@ -178,19 +189,21 @@ function currentTimestampInSeconds() {
 }
 
 function onFeedClicked() {
-    if(!sleeping){
+    if (!sleeping) {
         saveFood(DEFAULT_MAX_VALUE);
         refresh();
     }
 }
+
 function onHydrateClicked() {
-    if(!sleeping){
+    if (!sleeping) {
         saveHydration(DEFAULT_MAX_VALUE);
         refresh();
-    }else {refresh()}
+    } else { refresh() }
 }
+
 function onSleepOrWakeUpClicked() {
-   if (sleeping) {
+    if (sleeping) {
         wakeUp();
     } else {
         sleep();
@@ -208,8 +221,17 @@ function sleep() {
 function wakeUp() {
     localStorage.setItem("sleeping", 0); //for set sleeping when reload the page
     sleeping = false;
-    
+
     refresh();
+}
+
+function onExerciseClicked() {
+    if (!sleeping) {
+        if (!addExerciseDate(new Date())) {
+            alert('You have already exercised today! Try again tomorrow');
+        }
+        refresh();
+    }
 }
 
 function setButtonDonw() {

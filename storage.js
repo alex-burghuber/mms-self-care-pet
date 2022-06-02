@@ -1,10 +1,10 @@
 const DEFAULT_MAX_VALUE = 100; // default for all bars at max
-const HYDRATION_MIN_VALUE=50;
+const HYDRATION_MIN_VALUE = 50;
 const FOOD_MIN_VALUE = 50;
 
 const POWER_MIN_VALUE = 10;
 const POWER_TO_ACTIV_VALUE = 90;
-const POWER_FIT_TO_WAKE_UP_VALUE = 20; 
+const POWER_FIT_TO_WAKE_UP_VALUE = 20;
 
 // food functions
 function getFood() {
@@ -36,6 +36,7 @@ function getHydration() {
     }
     return hydration;
 }
+
 function saveHydration(value) {
     if (value < 0) {
         value = 0;
@@ -44,6 +45,7 @@ function saveHydration(value) {
     }
     localStorage.setItem("hydration", value);
 }
+
 //power functions
 function getPower() {
     let power = localStorage.getItem("power");
@@ -62,6 +64,55 @@ function savePower(value) {
         value = DEFAULT_MAX_VALUE;
     }
     localStorage.setItem("power", value);
+}
+
+function addExerciseDate(date) {
+    const savedExerciseDates = getExerciseDates();
+    if (savedExerciseDates.length < 3 && !isToday(date)) {
+        savedExerciseDates.push(date.toISOString());
+        localStorage.setItem("exercise_dates", JSON.stringify(savedExerciseDates));
+        return true;
+    }
+    return false;
+}
+
+function getExerciseDates() {
+    const savedExerciseDatesStr = localStorage.getItem("exercise_dates");
+
+    if (savedExerciseDatesStr === null) {
+        return [];
+    }
+
+    const savedExerciseDates = JSON.parse(savedExerciseDatesStr);
+
+    // Filter out exercise dates that are not this week
+    const newExerciseDates = savedExerciseDates.filter(date => !isDateInThisWeek(date));
+    localStorage.setItem("exercise_dates", JSON.stringify(newExerciseDates));
+
+    return newExerciseDates;
+}
+
+function isToday(date) {
+    const today = new Date();
+    return date.getDate() == today.getDate()
+        && date.getMonth() == today.getMonth()
+        && date.getFullYear() == today.getFullYear();
+}
+
+function isDateInThisWeek(date) {
+    const todayObj = new Date();
+    const todayDate = todayObj.getDate();
+    const todayDay = todayObj.getDay();
+
+    // get first date of week
+    const firstDayOfWeek = new Date(todayObj.setDate(todayDate - todayDay));
+
+    // get last date of week
+    const lastDayOfWeek = new Date(firstDayOfWeek);
+    lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
+
+    // if date is equal or within the first and last dates of the week
+    return date >= firstDayOfWeek && date <= lastDayOfWeek;
 }
 
 // function getSleeping () {
