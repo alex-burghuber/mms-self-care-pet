@@ -104,7 +104,19 @@ body {
     box-shadow: 3px 3px 4px 2px black;
     background-color: burlywood;
 }
-
+#left_panel{
+    margin-top: 4vh;
+     width: 18vw;
+     height: 45vh;
+     display: flex;
+     justify-content: space-around;
+     flex-direction: column;
+     align-items: center;
+     border: 2px solid chocolate;
+     border-radius: 40px;
+     box-shadow: 3px 3px 4px 2px black;
+     background-color: burlywood;
+ }
 h1{
     font-size: 1.6em;
     font-weight: bolder;
@@ -184,6 +196,10 @@ progress[value]::-webkit-progress-bar {
 
 #left-actions {
     width: 25vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 #right-actions {
@@ -284,3 +300,4 @@ progress[value]::-webkit-progress-bar {
     font-size: 0.8vh;
     font-style: italic;
 }
+/*-----  Trying_things -----*/

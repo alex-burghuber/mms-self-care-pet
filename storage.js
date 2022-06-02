@@ -1,7 +1,6 @@
 const DEFAULT_MAX_VALUE = 100; // default for all bars at max
 const HYDRATION_MIN_VALUE=50;
 const FOOD_MIN_VALUE = 50;
-
 const POWER_MIN_VALUE = 10;
 const POWER_MIDI_VALUE = 60; 
 
@@ -24,7 +23,6 @@ function saveFood(value) {
     }
     localStorage.setItem("food", value);
 }
-
 //hydration functions
 function getHydration() {
     let hydration = localStorage.getItem("hydration");
