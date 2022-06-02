@@ -2,6 +2,8 @@ const DEFAULT_MAX_VALUE = 100; // default for all bars at max
 const HYDRATION_MIN_VALUE = 50;
 const FOOD_MIN_VALUE = 50;
 const POWER_MIN_VALUE = 10;
+const POWER_GO_TO_SLEEP_VALUE = DEFAULT_MAX_VALUE/16;
+
 const POWER_TO_ACTIV_VALUE = 90;
 const POWER_FIT_TO_WAKE_UP_VALUE = 20;
 
