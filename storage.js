@@ -68,7 +68,10 @@ function savePower(value) {
 
 function addExerciseDate(date) {
     const savedExerciseDates = getExerciseDates();
-    if (savedExerciseDates.length < 3 && !isToday(date)) {
+
+    const wasAnyPerformedToday = savedExerciseDates.some((date) => isToday(new Date(date)));
+
+    if (savedExerciseDates.length < 3 && !wasAnyPerformedToday) {
         savedExerciseDates.push(date.toISOString());
         localStorage.setItem("exercise_dates", JSON.stringify(savedExerciseDates));
         return true;

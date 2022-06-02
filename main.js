@@ -47,13 +47,21 @@ function refreshUi() {
     const power = getPower();
     const hydration = getHydration();
 
+    const alerts = [];
+
+    let gifToUse = "images/rabbit_idle.gif"
+
     if (food <= FOOD_MIN_VALUE) { //hungry
-        document.getElementById("rabbit").src = "images/rabbit_hungry.gif";
-    } else if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
-        document.getElementById("rabbit").src = "images/rabbit_thirsty.gif";
-    } else {
-        document.getElementById("rabbit").src = "images/rabbit_idle.gif";
+        gifToUse = "images/rabbit_hungry.gif";
+        alerts.push('You should eat');
     }
+
+    if (hydration <= HYDRATION_MIN_VALUE) {  //thirsty
+        gifToUse = "images/rabbit_thirsty.gif";
+        alerts.push('You should drink');
+    }
+
+    document.getElementById("rabbit").src = gifToUse;
 
     if (sleeping) {
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -104,6 +112,8 @@ function refreshUi() {
 
         setButtonUp();
 
+        alerts.push('You should sleep');
+
     } else { // tiered, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
         sleep();
@@ -112,12 +122,12 @@ function refreshUi() {
     document.getElementById("hydrationBar").value = hydration;
     document.getElementById("foodBar").value = food;
     document.getElementById("powerBar").value = power;
-    
+
     const amountOfExercises = getExerciseDates().length;
 
     if (amountOfExercises === 3) {
         document.getElementById("p3").innerHTML = '✔️';
-    }  else {
+    } else {
         document.getElementById("p3").innerHTML = '';
     }
     if (amountOfExercises >= 2) {
@@ -130,13 +140,32 @@ function refreshUi() {
     } else {
         document.getElementById("p1").innerHTML = '';
     }
-    
 
     const name = getName();
     if (name === null) {
         document.getElementById("name").innerHTML = "Click to give me a name!";
     } else {
         document.getElementById("name").innerHTML = name;
+    }
+
+    if (alerts.length > 0) {
+        let tag;
+
+        if (document.getElementById("banner-wrapper").children.length === 0) {
+            tag = '<div id="banner" class="banner-anim">'
+        } else {
+            tag = '<div id="banner">'
+        }
+
+        tag += '<h2 style="margin: 15px">📝 Infos</h2><ul style="margin: 15px">';
+        
+        alerts.forEach((alert) => tag += `<li>  ➡ ${alert}</li>`);
+    
+        tag += "</ul></div>";
+
+        document.getElementById("banner-wrapper").innerHTML = tag;
+    } else {
+        document.getElementById("banner-wrapper").innerHTML = "";
     }
 }
 
@@ -233,7 +262,7 @@ function wakeUp() {
 function onExerciseClicked() {
     if (!sleeping) {
         if (!addExerciseDate(new Date())) {
-            alert('You have already exercised today! Try again tomorrow');
+            alert('Sorry, no more exercises should be completed today!');
         }
         refresh();
     }
