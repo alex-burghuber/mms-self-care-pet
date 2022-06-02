@@ -111,9 +111,8 @@ function refreshUi() {
 
 
         setButtonUp();
-
-        if (power < POWER_GO_TO_SLEEP_VALUE){
-            alerts.push('You should sleep');
+        if (power < 50/*POWER_GO_TO_SLEEP_VALUE*/){
+            alerts.push('You should sleep');           
         } 
 
     } else { // tiered, it falls asleep
@@ -161,6 +160,8 @@ function refreshUi() {
 
         if (document.getElementById("banner-wrapper").children.length === 0) {
             tag = '<div id="banner" class="banner-anim">'
+            document.getElementById("panel").style.cssText = 
+                                                'animation: panel-move 250ms ease-out forwards;';
         } else {
             tag = '<div id="banner">'
         }
@@ -174,6 +175,7 @@ function refreshUi() {
         document.getElementById("banner-wrapper").innerHTML = tag;
     } else {
         document.getElementById("banner-wrapper").innerHTML = "";
+        document.getElementById("panel").style.cssText = 'animation: none;';
     }
 }
 
@@ -189,10 +191,10 @@ function updateHydration(hoursPassed) {
 
 function updatePower(hoursPassed) {
     if (sleeping) {
-        const newPower = linearAscend(getPower(), DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearAscend(getPower(), /*POWER_*/DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
-        const newPower = linearDecay(getPower(), DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearDecay(getPower(), /*POWER_*/DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     }
 }

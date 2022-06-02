@@ -154,6 +154,11 @@ body {
     to { top: 0; }
 }
 
+@keyframes panel-move {
+    from { left: 0; }
+    to { left: 100px; }
+}
+
 #banner {
     position: absolute;
     z-index: 999;
@@ -201,6 +206,7 @@ body {
 }
 
 #panel {
+    position: relative;
     margin-top: 4vh;
     width: 60vw;
     height: 40vh;

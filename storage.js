@@ -127,15 +127,3 @@ function isDateInThisWeek(date) {
     // if date is equal or within the first and last dates of the week
     return date >= firstDayOfWeek && date <= lastDayOfWeek;
 }
-
-// function getSleeping () {
-//     let sleeping = localStorage.getItem("sleeping");
-//     if (sleeping === null) {
-//         saveSleeping(false);
-//         sleeping = localStorage.getItem("sleeping");
-//     }
-//     return sleeping;
-// }
-// function saveSleeping(value) {
-//     localStorage.setItem("sleeping", value);
-// }
