@@ -112,7 +112,9 @@ function refreshUi() {
 
         setButtonUp();
 
-        alerts.push('You should sleep');
+        if (power < POWER_GO_TO_SLEEP_VALUE){
+            alerts.push('You should sleep');
+        } 
 
     } else { // tiered, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -127,18 +129,24 @@ function refreshUi() {
 
     if (amountOfExercises === 3) {
         document.getElementById("p3").innerHTML = '✔️';
+        document.getElementById("p3").style.backgroundColor="#09c709";
     } else {
         document.getElementById("p3").innerHTML = '';
+        document.getElementById("p3").style.backgroundColor="";
     }
     if (amountOfExercises >= 2) {
         document.getElementById("p2").innerHTML = '✔️';
+        document.getElementById("p2").style.backgroundColor="#09c709";
     } else {
         document.getElementById("p2").innerHTML = '';
+        document.getElementById("p2").style.backgroundColor="";
     }
     if (amountOfExercises >= 1) {
         document.getElementById("p1").innerHTML = '✔️';
+        document.getElementById("p1").style.backgroundColor="#09c709";
     } else {
         document.getElementById("p1").innerHTML = '';
+        document.getElementById("p1").style.backgroundColor="";
     }
 
     const name = getName();
