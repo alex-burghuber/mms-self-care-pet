@@ -37,12 +37,17 @@ function main() {
 
     setInterval(refresh, 1000); // Calls refresh every 1 seconds
 }
+//------------------------------------------------------------------------------
+
+
+//------------------------ REFRESH FUNKTIONS -----------------------------------
 
 function refresh() {
     const hoursPassed = getHoursPassedSinceLastTimestamp();
 
     // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
-    var today = new Date().getMinutes();
+
+    var today = new Date().getMinutes(); // new Date().getDay()
     updateFood(hoursPassed, today);
     updateHydration(hoursPassed, today);
     localStorage.setItem("day", today);
@@ -186,12 +191,16 @@ function refreshUi() {
         document.getElementById("central_panel").style.cssText = 'animation: none;';
     }
 }
+//------------------------------------------------------------------------------
 
 
+//------------------------- UPDATES FUNKTIONS ----------------------------------
+
+//FOOD
 function updateFood(hoursPassed, today) {
     var day = localStorage.getItem("day");
     if(day === null) {
-        localStorage.setItem("day", new Date().getMinutes());
+        localStorage.setItem("day", new Date().getMinutes()); // new Date().getDay()
         day = localStorage.getItem("day");
     }
     if (day != today) { // new day
@@ -211,10 +220,11 @@ function updateFood(hoursPassed, today) {
     
 }
 
+//WATTER
 function updateHydration(hoursPassed, today) {
     var day = localStorage.getItem("day");
     if(day === null) {
-        localStorage.setItem("day", new Date().getMinutes());
+        localStorage.setItem("day", new Date().getMinutes()); // new Date().getDay()
         day = localStorage.getItem("day");
     }
     if (day != today) { // new day
@@ -232,6 +242,8 @@ function updateHydration(hoursPassed, today) {
     saveHydration(newhydration);
 }
 
+
+//POWER
 function updatePower(hoursPassed) {
     if (sleeping) {
         const newPower = linearAscend(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
@@ -241,6 +253,10 @@ function updatePower(hoursPassed) {
         savePower(newPower);
     }
 }
+//------------------------------------------------------------------------------
+
+
+//------------------------------  TIME FUNKTIONS  ------------------------------
 
 function getHoursPassedSinceLastTimestamp() {
     return (currentTimestampInSeconds() - localStorage.getItem("last_timestamp")) / 3600
@@ -250,17 +266,13 @@ function saveLastTimeStamp() {
     localStorage.setItem("last_timestamp", currentTimestampInSeconds());
 }
 
-/**
- * Linear decay formula N(t) = N0 - a * t
- * @param {number} currentValue N0
- * @param {number} decayPerHour a
- * @param {number} hour t
- * @returns Current value
- */
-function linearDecay(currentValue, decayPerHour, hour) {
-    return currentValue - decayPerHour * hour;
+function currentTimestampInSeconds() {
+    return (new Date()).getTime() / 1000;
 }
+//--------------------------------------------------------------------------------
 
+
+//------------------------------- VALUE FUNKTIONS---------------------------------
 /**
  * Linear ascend formula N(t) = N0 + a * t
  * @param {number} currentValue N0
@@ -272,10 +284,22 @@ function linearAscend(currentValue, ascendPerHour, hour) {
     return parseFloat(currentValue) + parseFloat(ascendPerHour * hour);
 }
 
-function currentTimestampInSeconds() {
-    return (new Date()).getTime() / 1000;
+/**
+ * Linear decay formula N(t) = N0 - a * t
+ * @param {number} currentValue N0
+ * @param {number} decayPerHour a
+ * @param {number} hour t
+ * @returns Current value
+ */
+ function linearDecay(currentValue, decayPerHour, hour) {
+    return currentValue - decayPerHour * hour;
 }
+//--------------------------------------------------------------------------------
 
+
+//----------------------------  ONCLICK FUNKTIONS  -------------------------------
+
+//FOOD
 function onFeedClicked() {
     if (!sleeping) {
         doIt(getCMeal(),"meal");
@@ -285,6 +309,7 @@ function onFeedClicked() {
     }
 }
 
+//WATTER
 function onHydrateClicked() {
     if(!sleeping){
         doIt(getCDrink(),"drink");
@@ -294,6 +319,7 @@ function onHydrateClicked() {
     } else { refresh() }
 }
 
+//POWER
 function onSleepOrWakeUpClicked() {
     if (sleeping) {
         wakeUp();
@@ -302,6 +328,7 @@ function onSleepOrWakeUpClicked() {
     }
 }
 
+//SPORT
 function onExerciseClicked() {
     if (!sleeping) {
         if (!addExerciseDate(new Date())) {
@@ -310,7 +337,10 @@ function onExerciseClicked() {
         refresh();
     }
 }
+//--------------------------------------------------------------------------------
 
+
+//---------------------------- OTHERS FUNKTIONS ----------------------------------
 
 function sleep() {
     localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
@@ -332,7 +362,10 @@ function onEditName() {
     saveName(name);
     refresh();
 }
+//--------------------------------------------------------------------------------
 
+
+//-------------------------- BUTTONS FUNKTIONS -----------------------------------
 function setButtonDonw() {
     document.getElementById("feed").classList.add('press');
     document.getElementById("drink").classList.add('press');
@@ -345,8 +378,7 @@ function setButtonUp() {
     document.getElementById("make-sport").classList.remove('press');
 }
 
-// when toDo it's doing
-function setButtons(){
+function setButtons(){// when toDo it's doing
     let tag = '<samp style="font-size:30px">&#128516 </samp>'
     tag += '<samp style="font-size:30px">&#128077</samp>';
     if(getCMeal() == 0 ) { // to much eat
@@ -375,3 +407,4 @@ function setButtons(){
         document.querySelectorAll('.todos')[1].style.borderRadius="15px 30px";
     }
 }
+//--------------------------------------------------------------------------------
