@@ -1,9 +1,10 @@
 const ASCEND_PER_HOUR = 50000; // for debugging 
 const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
-const FOOD_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / (24/3); // Assumes food is empty (for a meal) 24/3 (3 meal at day)
-const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / (24/8); // Assumes food is empty (for a glass) 24/8 (8 glass at day)
+const FOOD_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*3; // Assumes food is empty (for a meal) 24/3 (3 meal at day)
+const HIDRAT_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*8; // Assumes food is empty (for a glass) 24/8 (8 glass at day)
 
+const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR/24 // is empty at end of the day
 const POWER_ASCEND_PER_HOUR = DEFAULT_MAX_VALUE / 8; // Assumes power is full after 8 hours
 
 
@@ -34,8 +35,7 @@ function main() {
     setSleeping();
     refresh();
 
-    // setInterval(refresh, 10000); // Calls refresh every 10 seconds
-    setInterval(refresh, 1000); // For debugging: Calls refresh every second
+    setInterval(refresh, 1000); // Calls refresh every 1 seconds
 }
 
 function refresh() {
@@ -206,7 +206,7 @@ function updateFood(hoursPassed, today) {
         document.getElementById("feed").classList.remove('press');
         document.getElementById("feed").onclick = onFeedClicked;
     }
-    const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
+    const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
     
 }
@@ -228,16 +228,16 @@ function updateHydration(hoursPassed, today) {
         document.getElementById("drink").onclick = onHydrateClicked;
     }
     
-    const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR, hoursPassed);
+    const newhydration = linearDecay(getHydration(), HIDRAT_DECAY_PER_HOUR, hoursPassed);
     saveHydration(newhydration);
 }
 
 function updatePower(hoursPassed) {
     if (sleeping) {
-        const newPower = linearAscend(getPower(), /*POWER_*/DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearAscend(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
-        const newPower = linearDecay(getPower(), /*POWER_*/DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
         savePower(newPower);
     }
 }
