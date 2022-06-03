@@ -1,13 +1,19 @@
+// ------------------------- CONSTANTS ---------------------------------
+
 const DEFAULT_MAX_VALUE = 100; // default for all bars at max
+
 const HYDRATION_MIN_VALUE = 20;
 const FOOD_MIN_VALUE = 30;
-const POWER_MIN_VALUE = 0;
-const POWER_GO_TO_SLEEP_VALUE = 10; 
+const POWER_MIN_VALUE = 5;
 
+const POWER_GO_TO_SLEEP_VALUE = (DEFAULT_MAX_VALUE/24)*8; 
 const POWER_TO_ACTIV_VALUE = 90;
 const POWER_FIT_TO_WAKE_UP_VALUE = 20;
 
-// food functions
+// --------------------------------------------------------------------------
+
+
+// ------------------------- FOOD FUNKTIONS ---------------------------------
 function getFood() {
     let food = localStorage.getItem("food");
     if (food === null) {
@@ -26,7 +32,10 @@ function saveFood(value) {
     }
     localStorage.setItem("food", value);
 }
-//hydration functions
+// --------------------------------------------------------------------------
+
+
+// ------------------------- HYDRATION FUNKTIONS ---------------------------------
 function getHydration() {
     let hydration = localStorage.getItem("hydration");
     if (hydration === null) {
@@ -45,8 +54,10 @@ function saveHydration(value) {
     }
     localStorage.setItem("hydration", value);
 }
+// --------------------------------------------------------------------------
 
-//power functions
+
+// ------------------------ POWER FUNKTIONS ---------------------------------
 function getPower() {
     let power = localStorage.getItem("power");
     if (power === null) {
@@ -65,7 +76,10 @@ function savePower(value) {
     }
     localStorage.setItem("power", value);
 }
+// --------------------------------------------------------------------------
 
+
+// ------------------------ SPORT FUNKTIONS ---------------------------------
 function addExerciseDate(date) {
     const savedExerciseDates = getExerciseDates();
 
@@ -95,7 +109,10 @@ function getExerciseDates() {
 
     return newExerciseDates;
 }
+// --------------------------------------------------------------------------
 
+
+// ------------------------- NAME FUNKTIONS ---------------------------------
 function saveName(newName) {
     if (newName === null | newName ==''){
         return;
@@ -106,6 +123,10 @@ function saveName(newName) {
 function getName() {
     return localStorage.getItem("name");
 }
+// --------------------------------------------------------------------------
+
+
+// ------------------------- TIME FUNKTIONS ---------------------------------
 
 function isToday(date) {
     const today = new Date();
@@ -129,8 +150,11 @@ function isDateInThisWeek(date) {
     // if date is equal or within the first and last dates of the week
     return date >= firstDayOfWeek && date <= lastDayOfWeek;
 }
+// --------------------------------------------------------------------------
 
-// counters functions
+
+
+// ----------------------- COUNTERS FUNKTIONS -------------------------------
 function getCMeal() {
     let m = localStorage.getItem("meal"); 
     if(m === null) {

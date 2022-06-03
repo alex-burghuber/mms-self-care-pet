@@ -1,5 +1,5 @@
-const ASCEND_PER_HOUR = 50000; // for debugging 
-const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
+// const ASCEND_PER_HOUR = 50000; // for debugging 
+// const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
 const FOOD_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*3; // Assumes food is empty (for a meal) 24/3 (3 meal at day)
 const HIDRAT_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*8; // Assumes food is empty (for a glass) 24/8 (8 glass at day)
@@ -47,7 +47,7 @@ function refresh() {
 
     // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
 
-    var today = new Date().getMinutes(); // new Date().getDay()
+    var today = new Date().getDay();
     updateFood(hoursPassed, today);
     updateHydration(hoursPassed, today);
     localStorage.setItem("day", today);
@@ -200,7 +200,7 @@ function refreshUi() {
 function updateFood(hoursPassed, today) {
     var day = localStorage.getItem("day");
     if(day === null) {
-        localStorage.setItem("day", new Date().getMinutes()); // new Date().getDay()
+        localStorage.setItem("day", new Date().getDay());
         day = localStorage.getItem("day");
     }
     if (day != today) { // new day. Do reset.
@@ -227,7 +227,7 @@ function updateFood(hoursPassed, today) {
 function updateHydration(hoursPassed, today) {
     var day = localStorage.getItem("day");
     if(day === null) {
-        localStorage.setItem("day", new Date().getMinutes()); // new Date().getDay()
+        localStorage.setItem("day", new Date().getDay());
         day = localStorage.getItem("day");
     }
     if (day != today) { // new day
@@ -253,7 +253,7 @@ function updateHydration(hoursPassed, today) {
 //POWER
 function updatePower(hoursPassed) {
     if (sleeping) {
-        const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR*1000, hoursPassed);
+        const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR, hoursPassed);
         savePower(newPower);
     } else {
         const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
