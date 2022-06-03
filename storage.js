@@ -74,6 +74,7 @@ function addExerciseDate(date) {
     if (savedExerciseDates.length < 3 && !wasAnyPerformedToday) {
         savedExerciseDates.push(date.toISOString());
         localStorage.setItem("exercise_dates", JSON.stringify(savedExerciseDates));
+        tochange = "exercises";
         return true;
     }
     return false;
@@ -124,4 +125,32 @@ function isDateInThisWeek(date) {
 
     // if date is equal or within the first and last dates of the week
     return date >= firstDayOfWeek && date <= lastDayOfWeek;
+}
+
+// counters functions
+function getCMeal() {
+    let m = localStorage.getItem("meal"); 
+    if(m === null) {
+        localStorage.setItem("meal", 5);
+        m = localStorage.getItem("meal");
+    }
+    return m;
+}
+
+function getCDrink() {
+    let d = localStorage.getItem("drink"); 
+    if(d === null) {
+        localStorage.setItem("drink", 10);
+        d = localStorage.getItem("drink");
+    }
+    return d;
+}
+
+
+function doIt(value, id) {
+    --value;
+    if (value < 0) {
+        value = 0;
+    }
+    localStorage.setItem(id, value);
 }

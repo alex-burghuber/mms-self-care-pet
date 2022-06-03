@@ -7,10 +7,14 @@ const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes power is empty afte
 const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR ; // Assumes power is full after 8 hours
 const ASCEND_PER_HOUR = 50000; // for debugging 
 
-main();
+
 
 var sleeping;
-var tochange;
+
+
+main();
+
+
 function setSleeping() {
     if (localStorage.getItem("sleeping") == 1) {
         sleeping = true;
@@ -19,9 +23,15 @@ function setSleeping() {
     }
 }
 
+
+
 function main() {
     // Saves the last unix timestamp in the local storage when the window is closed
     window.onbeforeunload = saveLastTimeStamp;
+    
+    
+    document.querySelector('#valmeal').innerHTML= getCMeal();
+    document.querySelector('#valdrink').innerHTML= getCDrink();
 
     setSleeping();
     refresh();
@@ -34,13 +44,17 @@ function refresh() {
     const hoursPassed = getHoursPassedSinceLastTimestamp();
 
     // console.log(`Refreshing... Hours passed since last time: ${hoursPassed}h`);
+    var today = new Date().getMinutes();
+    updateFood(hoursPassed, today);
+    updateHydration(hoursPassed, today);
+    localStorage.setItem("day", today);
 
-    updateFood(hoursPassed);
-    updateHydration(hoursPassed);
     updatePower(hoursPassed);
     saveLastTimeStamp();
     
     refreshUi();
+
+    setButtons();
 }
 
 function refreshUi() {
@@ -160,7 +174,7 @@ function refreshUi() {
 
         if (document.getElementById("banner-wrapper").children.length === 0) {
             tag = '<div id="banner" class="banner-anim">'
-            document.getElementById("panel").style.cssText = 
+            document.getElementById("central_panel").style.cssText = 
                                                 'animation: panel-move 250ms ease-out forwards;';
         } else {
             tag = '<div id="banner">'
@@ -175,16 +189,51 @@ function refreshUi() {
         document.getElementById("banner-wrapper").innerHTML = tag;
     } else {
         document.getElementById("banner-wrapper").innerHTML = "";
-        document.getElementById("panel").style.cssText = 'animation: none;';
+        document.getElementById("central_panel").style.cssText = 'animation: none;';
     }
 }
 
-function updateFood(hoursPassed) {
+
+function updateFood(hoursPassed, today) {
+    var day = localStorage.getItem("day");
+    if(day === null) {
+        localStorage.setItem("day", new Date().getMinutes());
+        day = localStorage.getItem("day");
+    }
+    if (day != today) { // new day
+        localStorage.setItem("meal", 5);
+
+        let tag = '<div class="count"><p id="valmeal"></p></div>'
+        document.querySelectorAll('.box-todo')[0].innerHTML =tag;
+        document.querySelectorAll('.todos')[0].style.backgroundColor="";
+        document.getElementById("text-meal").innerText="Eat healthy meal:";
+
+        document.querySelector('#valmeal').innerHTML = getCMeal();
+        document.getElementById("feed").classList.remove('press');
+        document.getElementById("feed").onclick = onFeedClicked;
+    }
     const newFood = linearDecay(getFood(), DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
+    
 }
 
-function updateHydration(hoursPassed) {
+function updateHydration(hoursPassed, today) {
+    var day = localStorage.getItem("day");
+    if(day === null) {
+        localStorage.setItem("day", new Date().getMinutes());
+        day = localStorage.getItem("day");
+    }
+    if (day != today) { // new day
+        localStorage.setItem("drink", 10);
+        let tag = '<div class="count"><p id="valdrink"></p></div>'
+        document.getElementById("box-drink").innerHTML =tag;
+        document.querySelectorAll('.todos')[1].style.backgroundColor="";
+        document.getElementById("text-drink").innerText="Drink glass watter:";
+        document.querySelector('#valdrink').innerHTML = getCDrink();
+        document.getElementById("drink").classList.remove('press');
+        document.getElementById("drink").onclick = onHydrateClicked;
+    }
+    
     const newhydration = linearDecay(getHydration(), DECAY_PER_HOUR, hoursPassed);
     saveHydration(newhydration);
 }
@@ -235,8 +284,8 @@ function currentTimestampInSeconds() {
 
 function onFeedClicked() {
     if (!sleeping) {
-        tochange='meals';
-        decrement(tochange);
+        doIt(getCMeal(),"meal");
+        document.querySelector('#valmeal').innerHTML = getCMeal();;
         saveFood(DEFAULT_MAX_VALUE);
         refresh();
     }
@@ -244,8 +293,8 @@ function onFeedClicked() {
 
 function onHydrateClicked() {
     if(!sleeping){
-        tochange='drinks';
-        decrement(tochange);
+        doIt(getCDrink(),"drink");
+        document.querySelector('#valdrink').innerHTML = getCDrink();
         saveHydration(DEFAULT_MAX_VALUE);
         refresh();
     } else { refresh() }
@@ -258,20 +307,25 @@ function onSleepOrWakeUpClicked() {
         sleep();
     }
 }
-function decrement(tochange) {
-    document.getElementById(tochange).stepDown();
+
+function onExerciseClicked() {
+    if (!sleeping) {
+        if (!addExerciseDate(new Date())) {
+            alert('Sorry, no more exercises should be completed today!');
+        }
+        refresh();
+    }
+}
+
+
+function decrementMeal() {
+
 }
 
 function sleep() {
     localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
     sleeping = true;
     document.getElementById("sleep-or-wake-up").classList.replace("sleep", "wake-up");
-    buttonOff( 
-        document.getElementById("feed"), 
-        document.getElementById("make-sport"), 
-        document.getElementById("sleep-or-wake-up"),
-        document.getElementById("drink")
-        );
     refresh();
 }
 
@@ -282,14 +336,6 @@ function wakeUp() {
     refresh();
 }
 
-function onExerciseClicked() {
-    if (!sleeping) {
-        if (!addExerciseDate(new Date())) {
-            alert('Sorry, no more exercises should be completed today!');
-        }
-        refresh();
-    }
-}
 
 function onEditName() {
     const name = prompt("Enter a new name here:");
@@ -307,4 +353,40 @@ function setButtonUp() {
     document.getElementById("feed").classList.remove('press');
     document.getElementById("drink").classList.remove('press');
     document.getElementById("make-sport").classList.remove('press');
+}
+
+
+function setButtons(){
+    let tag = '<samp style="font-size:30px">&#128516 </samp>'
+    tag += '<samp style="font-size:30px">&#128077</samp>';
+    if(getCMeal() == 0 ) { // to much eat
+        document.getElementById("feed").classList.add('press');
+        document.getElementById("feed").onclick = "";
+
+        document.getElementById("text-meal").innerText="You did it!";
+        document.getElementById("text-meal").style.display="flex";
+        document.getElementById("text-meal").style.justifyContent="center";
+        
+
+        document.querySelectorAll('.box-todo')[0].innerHTML = tag;
+        document.querySelectorAll('.todos')[0].style.backgroundColor="aqua";
+        document.querySelectorAll('.todos')[0].style.borderRadius="15px 30px";
+        
+
+
+    }
+
+    if(getCDrink() == 0 ) { // to much drink
+        document.getElementById("drink").classList.add('press');
+        document.getElementById("drink").onclick = "";
+
+        document.getElementById("text-drink").innerText="You did it!";
+        document.getElementById("text-drink").style.display="flex";
+        document.getElementById("text-drink").style.justifyContent="center";
+
+        document.querySelectorAll('.box-todo')[1].innerHTML = tag;
+        document.querySelectorAll('.todos')[1].style.backgroundColor="aqua";
+        document.querySelectorAll('.todos')[1].style.borderRadius="15px 30px";
+
+    }
 }

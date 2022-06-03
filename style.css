@@ -150,23 +150,23 @@ body {
 }
 
 @keyframes banner-enter {
-    from { top: -200px; }
+    from { top: -25vw; }
     to { top: 0; }
 }
 
 @keyframes panel-move {
     from { left: 0; }
-    to { left: 100px; }
+    to { left: 13vw; }
 }
 
 #banner {
     position: absolute;
     z-index: 999;
-    left: 50px;
+    left: 4vw;
     top: 0;
 
-    width: 200px;
-    height: 100px;
+    width: 25vw;
+    height: 12.5vh;
 
     border: 2px solid chocolate;
     border-radius: 40px;
@@ -181,7 +181,7 @@ body {
 }
 
 #root {
-    width: 90vw;
+    width: 96vw;
     height: 100vh;
 
     display: flex;
@@ -205,33 +205,25 @@ body {
     align-items: center;
 }
 
-#panel {
+#central_panel {
     position: relative;
     margin-top: 4vh;
     width: 60vw;
     height: 40vh;
+}
+
+.panel {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
+
     border: 2px solid chocolate;
     border-radius: 40px;
     box-shadow: 3px 3px 4px 2px black;
     background-color: burlywood;
 }
-#left_panel{
-    margin-top: 4vh;
-     width: 18vw;
-     height: 45vh;
-     display: flex;
-     justify-content: space-around;
-     flex-direction: column;
-     align-items: center;
-     border: 2px solid chocolate;
-     border-radius: 40px;
-     box-shadow: 3px 3px 4px 2px black;
-     background-color: burlywood;
- }
+
 h1{
     font-size: 1.6em;
     font-weight: bolder;
@@ -303,8 +295,9 @@ progress[value]::-webkit-progress-value {
 /*--------------------------- */
 
 #content {
+    width:100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     flex-grow: 1;
 }
@@ -317,6 +310,71 @@ progress[value]::-webkit-progress-value {
     align-items: center;
 }
 
+#left_panel{
+    margin-top: 4vh;
+    width: 18vw;
+    height: 45vh;  
+    border-radius: 5% 40% / 30% 5%; 
+}
+
+#quest {
+    height: 40vh;   
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    margin-bottom: 2vh;
+}
+
+.todos {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.count {
+    width: 40px;
+    height: 25px;
+    border-radius: 15% 25% 45% 35%;
+    border: 1px solid gray;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.count samp{
+    font-size: large;
+}
+
+.box-todo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 2vh ;
+}
+.box-todo samp{
+    
+    width: 40px;
+}
+.check{
+    margin-left: 4vw;
+    margin-right: 3vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#brush-teeth {
+    width: 16vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
 #right-actions {
     width: 25vw;
 
@@ -324,8 +382,10 @@ progress[value]::-webkit-progress-value {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
+/* --------------BUTTONS STYLES-------------- */
 .button {
     color: rgb(19, 2, 168);
     justify-content: center;
@@ -334,8 +394,8 @@ progress[value]::-webkit-progress-value {
     width: 8vh;
     height: 8vh;
 
-    box-shadow: 3px 5px rgb(100, 100, 100);
-    border-radius: 50% 20% / 10% 40%;
+    box-shadow: 5px 5px 5px rgb(0, 0, 50);
+    border-radius: 10% 40% 40% 10%;
     border-color: blue;
     background-color: rgb(11, 145, 255);
     font-size: 0, 6em;
@@ -348,13 +408,13 @@ progress[value]::-webkit-progress-value {
 }
 
 .button:active {
-    box-shadow: 3px 5px rgb(92, 100, 75) inset;
+    box-shadow: 3px 5px rgb(50, 60, 100) inset;
 }
 
 .press {
     border-color: blue;
     background-color: rgb(11, 145, 255);
-    box-shadow: 3px 5px rgb(92, 100, 75) inset;
+    box-shadow: 3px 5px rgb(50, 60, 100) inset;
 }
 
 .press:hover {
@@ -363,55 +423,25 @@ progress[value]::-webkit-progress-value {
     background-color: rgb(11, 145, 255);
 }
 
+/* ----------------------------------------------------------------- */
+
 #pet-wrapper {
+    width: 40vw;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-content: flex-end;
+    justify-content: center;
+    align-items: center;
 }
 
 #pet-wrapper img {
-    height: 50vh;
-}
-
-
-
-
-
-/*---- buttons SLEEP and WAKE UP -----*/
-.sleep {
-    color: rgb(30, 30, 130);
-    justify-content: center;
-    margin: 10px;
-    width: 50px;
-    height: 40px;
-
-    box-shadow: 2px 3px;
-    border-radius: 15%;
-    border-color: blue;
-    background-color: rgb(50, 150, 50);
-    font-size: 0, 6em;
-    font-weight: bold;
-}
-
-.wake-up {
-    color: rgb(250, 250, 50);
-    justify-content: center;
-    margin: 10px;
-
-    box-shadow: 3px 5px;
-    border-radius: 15%;
-    border-color: blue;
-    background-color: rgb(255, 11, 52);
-    font-size: 0, 6em;
-    font-weight: bold;
+    height: 40vh;
 }
 
 /*-----  css botton  -----*/
 #botton {
     position: absolute;
     bottom: 1vh;
-    width: 90vw;
+    width: 96vw;
     text-align: center;
     font-size: 1vh;
     color: burlywood;

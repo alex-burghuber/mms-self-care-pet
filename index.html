@@ -11,7 +11,7 @@
                 
             </div>
             <div id="header">
-                <div id="panel">
+                <div id="central_panel" class="panel">
                     <h1 id="name" onclick="onEditName()">COOL NAME</h1>
                     <div id="bars">
                         <div class="bar">
@@ -41,23 +41,50 @@
             </div>
             <div id="content">
                 <div id="left-actions">
-                    <div id="left_panel">
-                        <h1>ToDo's</h1>
-                        <div>
-                            <span>Eat a healthy meal:</span>
-                            <input id="meals" type=number value="5" min=0 max=5>
+                    <div id="left_panel" class="panel">
+                        <h1 style="line-height: 6vh;">ToDo's</h1>
+                        <div id="quest">
+                            <div class="todos" >
+                                <span id="text-meal">Eat healthy meal:</span>
+                                <div class="box-todo"> 
+                                    <div class="count">
+                                        <p id="valmeal"></p>  <!-- <input id="meals" type=number value="5" min=0 max=5> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="todos">
+                                <span id="text-drink">Drink glass water:</span>
+                                <div id="box-drink" class="box-todo">
+                                    <div class="count">
+                                        <p id="valdrink"></p>  <!-- <input id="meals" type=number value="5" min=0 max=5> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="todos">
+                                <form action="" >
+                                    <div id="brush-teeth">
+                                        <span style="height: 3vh;">Brush teeth:</span>
+                                        
+                                        <div class="check">
+                                            <label for="morning">Morning</label>
+                                            <input id="morning" type="checkbox">
+                                        </div>
+                          
+                                        <div class="check">
+                                            <label for="evening" style="font-size: 0.9em;">Evening</label>
+                                            <input id="evening" type="checkbox">
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <form>
+                                    <div class="check" style="margin: 0;">
+                                        <label for="hw">Homework</label>
+                                        <input id="hw" type="checkbox">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        
-                        <div>
-                            <span>Drink  a glass of water:</span>
-                            <input id="drinks" type=number value="10" min=0 max=10>
-                        </div>
-                        
-                        <div>
-                            <span>Exercise today:</span>
-                            <input id="exercises" type=number value="1" min=0 max=3>
-                        </div>
-                        <br>
                     </div>
                     
                 </div>
