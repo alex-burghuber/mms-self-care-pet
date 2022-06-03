@@ -1,12 +1,10 @@
-
+const ASCEND_PER_HOUR = 50000; // for debugging 
 const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
-const FOOD_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes food is empty after 24 hours
-const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR / 24; // Assumes power is empty after 24 hours
+const FOOD_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / (24/3); // Assumes food is empty (for a meal) 24/3 (3 meal at day)
+const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / (24/8); // Assumes food is empty (for a glass) 24/8 (8 glass at day)
 
-const POWER_ASCEND_PER_HOUR = DECAY_PER_HOUR ; // Assumes power is full after 8 hours
-const ASCEND_PER_HOUR = 50000; // for debugging 
-
+const POWER_ASCEND_PER_HOUR = DEFAULT_MAX_VALUE / 8; // Assumes power is full after 8 hours
 
 
 var sleeping;
@@ -115,18 +113,14 @@ function refreshUi() {
 
         document.getElementById("sleep-or-wake-up").onclick = "";
         document.getElementById("sleep-or-wake-up").innerHTML = "";
-        // document.getElementById("sleep-or-wake-up").classList.add('press');
-
 
     } else if (power > POWER_MIN_VALUE) { // it can try to sleep
 
         document.getElementById("sleep-or-wake-up").onclick = onSleepOrWakeUpClicked;
         document.getElementById("sleep-or-wake-up").innerHTML = "💤💤<br>SLEEP";
-        // document.getElementById("sleep-or-wake-up").classList.remove('press');
-
 
         setButtonUp();
-        if (power < 50/*POWER_GO_TO_SLEEP_VALUE*/){
+        if (power < POWER_GO_TO_SLEEP_VALUE){
             alerts.push('You should sleep');           
         } 
 
