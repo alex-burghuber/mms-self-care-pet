@@ -133,6 +133,25 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+/* ENDE RESET */
+/* ---------------------------------------------------------------- */
+
+/* ------------------------- START CODE -------------------------- */
+
+
+/* ---------------ANIMATION-------------------- */
+@keyframes banner-enter {
+    from { top: -25vw; }
+    to { top: 0; }
+}
+
+@keyframes panel-move {
+    from { left: 0; }
+    to { left: 13vw; }
+}
+/* -------------------------------------------- */
+
+
 
 * {
     font-family: Arial, Helvetica, sans-serif;
@@ -147,16 +166,6 @@ body {
     /* filter: alpha(opacity=50); */
     /* opacity: 0.5; */
     background-color: black;
-}
-
-@keyframes banner-enter {
-    from { top: -25vw; }
-    to { top: 0; }
-}
-
-@keyframes panel-move {
-    from { left: 0; }
-    to { left: 13vw; }
 }
 
 #banner {
@@ -206,6 +215,9 @@ body {
     align-items: center;
 }
 
+
+/*-------------------------  CENTRAL-PANEL  ---------------- */
+
 #central_panel {
     position: relative;
     margin-top: 4vh;
@@ -213,18 +225,9 @@ body {
     height: 40vh;
 }
 
-.panel {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center; 
 
-    border: 2px solid chocolate;
-    border-radius: 40px;
-    box-shadow: 3px 3px 4px 2px black;
-    background-color: burlywood;
-}
 
+/* ---------------- CENTRAL-PANEL ID ----------------*/
 #name{
     font-size: 1.6em;
     font-weight: bolder;
@@ -242,6 +245,21 @@ body {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+}
+/* ----------------------------------------------- */
+
+/* ------------CENTRAL-PANEL CLASS --------------- */
+
+.panel {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center; 
+
+    border: 2px solid chocolate;
+    border-radius: 40px;
+    box-shadow: 3px 3px 4px 2px black;
+    background-color: burlywood;
 }
 
 .bar {
@@ -266,8 +284,10 @@ body {
     justify-content: space-around;
     width: 58vw;
 }
+/*------------------------------------------------------------------------------ */
 
-/*----progres bar style----*/
+
+/*------------------------- PROGRES BAR STYLES ---------------------------------*/
 
 progress[value] {
     /* Reset the default appearance */
@@ -295,9 +315,10 @@ progress[value]::-webkit-progress-value {
     border-radius: 20px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
+/*------------------------------------------------------------------------------ */
 
 
-/*--------------------------- */
+/*---------------------------------- CONTENT ----------------------------------- */
 
 #content {
     width:100%;
@@ -306,6 +327,7 @@ progress[value]::-webkit-progress-value {
 
     flex-grow: 1;
 }
+/* ----------------------  LEFT ACTIONS ---------------------*/
 
 #left-actions {
     width: 25vw;
@@ -314,7 +336,9 @@ progress[value]::-webkit-progress-value {
     flex-direction: column;
     align-items: center;
 }
+/* ------------ CSS TODO'S LEFT-PANEL --------------*/
 
+/* ID */
 #left_panel{
     margin-top: 4vh;
     width: 18vw;
@@ -332,6 +356,7 @@ progress[value]::-webkit-progress-value {
     margin-bottom: 2vh;
 }
 
+/* CLASS */
 .todos {
     height: 30%;
     display: flex;
@@ -339,6 +364,20 @@ progress[value]::-webkit-progress-value {
     justify-content: center;
 }
 
+.box-todo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 2vh ;
+}
+.box-todo samp{
+    
+    width: 40px;
+}
+/* --------------------------------------- */
+
+
+/* ----- COUNTER FOR MEAL AND DRINK  ----- */
 .count {
     width: 40px;
     height: 25px;
@@ -353,17 +392,10 @@ progress[value]::-webkit-progress-value {
 .count samp{
     font-size: large;
 }
+/* --------------------------------------- */
 
-.box-todo{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 2vh ;
-}
-.box-todo samp{
-    
-    width: 40px;
-}
+
+/* ------------ CSS CHECK LIST ----------  */
 .check{
     margin-left: 4vw;
     margin-right: 3vw;
@@ -378,8 +410,25 @@ progress[value]::-webkit-progress-value {
     flex-direction: column;
     justify-content: space-around;
 }
+/* --------------------------------------- */
 
 
+/*----------------------- CSS PET -----------------------------*/
+#pet-wrapper {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#pet-wrapper img {
+    height: 40vh;
+}
+/*------------------------------------------------------------*/
+
+
+/* ----------------------  RIGHT ACTIONS ---------------------*/
 #right-actions {
     width: 25vw;
 
@@ -390,7 +439,7 @@ progress[value]::-webkit-progress-value {
 
 }
 
-/* --------------BUTTONS STYLES-------------- */
+/* ---------------- BUTTONS STYLES ----------------*/
 .button {
     color: rgb(19, 2, 168);
     justify-content: center;
@@ -413,8 +462,6 @@ progress[value]::-webkit-progress-value {
     cursor:pointer;
 }
 
-
-
 .button:active {
     box-shadow: 3px 5px rgb(50, 60, 100) inset;
 }
@@ -430,23 +477,12 @@ progress[value]::-webkit-progress-value {
     color: blue;
     background-color: rgb(11, 145, 255);
 }
+/* ------------------------------------------------*/
+/* -------------------------------------------------------------------- */
 
-/* ----------------------------------------------------------------- */
 
-#pet-wrapper {
-    width: 40vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#pet-wrapper img {
-    height: 40vh;
-}
-
-/*-----  css botton  -----*/
-#botton {
+/*---------------------------  CSS BOTTOM  ------------------------------*/
+#bottom {
     position: absolute;
     bottom: 1vh;
     width: 96vw;
@@ -455,8 +491,8 @@ progress[value]::-webkit-progress-value {
     color: burlywood;
 }
 
-#botton p {
+#bottom p {
     font-size: 0.8vh;
     font-style: italic;
 }
-/*-----  Trying_things -----*/
+/*----------------------------------------------------------------------*/

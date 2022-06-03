@@ -203,7 +203,8 @@ function updateFood(hoursPassed, today) {
         localStorage.setItem("day", new Date().getMinutes()); // new Date().getDay()
         day = localStorage.getItem("day");
     }
-    if (day != today) { // new day
+    if (day != today) { // new day. Do reset.
+        saveFood(DEFAULT_MAX_VALUE);
         localStorage.setItem("meal", 5);
 
         let tag = '<div class="count"><p id="valmeal"></p></div>'
