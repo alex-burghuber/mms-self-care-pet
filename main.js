@@ -1,36 +1,22 @@
 // const ASCEND_PER_HOUR = 50000; // for debugging 
 // const DECAY_PER_HOUR = 10000; // For debugging // for food and power is the same
 
-const FOOD_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*3; // Assumes food is empty (for a meal) 24/3 (3 meal at day)
-const HIDRAT_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*8; // Assumes food is empty (for a glass) 24/8 (8 glass at day)
+const FOOD_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24) * 3; // Assumes food is empty (for a meal) 24/3 (3 meal at day)
+const HIDRAT_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24) * 8; // Assumes food is empty (for a glass) 24/8 (8 glass at day)
 
-const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE/24 // is empty at end of the day
+const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE / 24 // is empty at end of the day
 const POWER_ASCEND_PER_HOUR = DEFAULT_MAX_VALUE / 8; // Assumes power is full after 8 hours
-
 
 var sleeping;
 
-
 main();
-
-
-function setSleeping() {
-    if (localStorage.getItem("sleeping") == 1) {
-        sleeping = true;
-    } else {
-        sleeping = false;
-    }
-}
-
-
 
 function main() {
     // Saves the last unix timestamp in the local storage when the window is closed
     window.onbeforeunload = saveLastTimeStamp;
-    
-    
-    document.querySelector('#valmeal').innerHTML= getCMeal();
-    document.querySelector('#valdrink').innerHTML= getCDrink();
+
+    document.querySelector('#valmeal').innerHTML = getCMeal();
+    document.querySelector('#valdrink').innerHTML = getCDrink();
 
     setSleeping();
     refresh();
@@ -39,9 +25,7 @@ function main() {
 }
 //------------------------------------------------------------------------------
 
-
-//------------------------ REFRESH FUNKTIONS -----------------------------------
-
+//------------------------ REFRESH FUNCTIONS -----------------------------------
 function refresh() {
     const hoursPassed = getHoursPassedSinceLastTimestamp();
 
@@ -54,7 +38,7 @@ function refresh() {
 
     updatePower(hoursPassed);
     saveLastTimeStamp();
-    
+
     refreshUi();
 
     setButtons();
@@ -125,9 +109,9 @@ function refreshUi() {
         document.getElementById("sleep-or-wake-up").innerHTML = "💤💤<br>SLEEP";
 
         setButtonUp();
-        if (power < POWER_GO_TO_SLEEP_VALUE){
-            alerts.push('You should sleep');           
-        } 
+        if (power < POWER_GO_TO_SLEEP_VALUE) {
+            alerts.push('You should sleep');
+        }
 
     } else { // tiered, it falls asleep
         document.getElementById("rabbit").src = "images/rabbit_sleep.gif";
@@ -141,24 +125,24 @@ function refreshUi() {
 
     if (amountOfExercises === 3) {
         document.getElementById("p3").innerHTML = '✔️';
-        document.getElementById("p3").style.backgroundColor="#09c709";
+        document.getElementById("p3").style.backgroundColor = "#09c709";
     } else {
         document.getElementById("p3").innerHTML = '';
-        document.getElementById("p3").style.backgroundColor="";
+        document.getElementById("p3").style.backgroundColor = "";
     }
     if (amountOfExercises >= 2) {
         document.getElementById("p2").innerHTML = '✔️';
-        document.getElementById("p2").style.backgroundColor="#09c709";
+        document.getElementById("p2").style.backgroundColor = "#09c709";
     } else {
         document.getElementById("p2").innerHTML = '';
-        document.getElementById("p2").style.backgroundColor="";
+        document.getElementById("p2").style.backgroundColor = "";
     }
     if (amountOfExercises >= 1) {
         document.getElementById("p1").innerHTML = '✔️';
-        document.getElementById("p1").style.backgroundColor="#09c709";
+        document.getElementById("p1").style.backgroundColor = "#09c709";
     } else {
         document.getElementById("p1").innerHTML = '';
-        document.getElementById("p1").style.backgroundColor="";
+        document.getElementById("p1").style.backgroundColor = "";
     }
 
     const name = getName();
@@ -173,16 +157,16 @@ function refreshUi() {
 
         if (document.getElementById("banner-wrapper").children.length === 0) {
             tag = '<div id="banner" class="banner-anim">'
-            document.getElementById("central_panel").style.cssText = 
-                                                'animation: panel-move 250ms ease-out forwards;';
+            document.getElementById("central_panel").style.cssText =
+                'animation: panel-move 250ms ease-out forwards;';
         } else {
             tag = '<div id="banner">'
         }
 
         tag += '<h2 style="margin: 15px">📝 Infos</h2><ul style="margin: 15px">';
-        
+
         alerts.forEach((alert) => tag += `<li>  ➡ ${alert}</li>`);
-    
+
         tag += "</ul></div>";
 
         document.getElementById("banner-wrapper").innerHTML = tag;
@@ -194,12 +178,12 @@ function refreshUi() {
 //------------------------------------------------------------------------------
 
 
-//------------------------- UPDATES FUNKTIONS ----------------------------------
+//------------------------- UPDATES FUNCTIONS ----------------------------------
 
 //FOOD
 function updateFood(hoursPassed, today) {
     var day = localStorage.getItem("day");
-    if(day === null) {
+    if (day === null) {
         localStorage.setItem("day", new Date().getDay());
         day = localStorage.getItem("day");
     }
@@ -209,25 +193,25 @@ function updateFood(hoursPassed, today) {
 
         let tag = '<div class="count"><p id="valmeal"></p></div>';
 
-        document.querySelectorAll('.box-todo')[0].innerHTML =tag;
-        document.querySelectorAll('.todos')[0].style.backgroundColor="";
-        document.getElementById("text-meal").innerText="Eat healthy meal:";
-        document.getElementById("text-meal").style.justifyContent="";
+        document.querySelectorAll('.box-todo')[0].innerHTML = tag;
+        document.querySelectorAll('.todos')[0].style.backgroundColor = "";
+        document.getElementById("text-meal").innerText = "Eat healthy meal:";
+        document.getElementById("text-meal").style.justifyContent = "";
 
         document.querySelector('#valmeal').innerHTML = getCMeal();
         document.getElementById("feed").classList.remove('press');
         document.getElementById("feed").onclick = onFeedClicked;
     }
 
-    if (getFood() < FOOD_MIN_VALUE){
+    if (getFood() < FOOD_MIN_VALUE) {
         localStorage.setItem("meal", 1);
 
         let tag = '<div class="count"><span>+ </span><p id="valmeal"></p></div>';
 
-        document.querySelectorAll('.box-todo')[0].innerHTML =tag;
-        document.querySelectorAll('.todos')[0].style.backgroundColor="";
-        document.getElementById("text-meal").innerText="Eat healthy meal:";
-        document.getElementById("text-meal").style.justifyContent="";
+        document.querySelectorAll('.box-todo')[0].innerHTML = tag;
+        document.querySelectorAll('.todos')[0].style.backgroundColor = "";
+        document.getElementById("text-meal").innerText = "Eat healthy meal:";
+        document.getElementById("text-meal").style.justifyContent = "";
 
         document.querySelector('#valmeal').innerHTML = getCMeal();
         document.getElementById("feed").classList.remove('press');
@@ -235,24 +219,24 @@ function updateFood(hoursPassed, today) {
     }
     const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
-    
+
 }
 
-//WATTER
+//WATER
 function updateHydration(hoursPassed, today) {
     var day = localStorage.getItem("day");
-    if(day === null) {
+    if (day === null) {
         localStorage.setItem("day", new Date().getDay());
         day = localStorage.getItem("day");
     }
     if (day != today) { // new day
         localStorage.setItem("drink", 10);
         let tag = '<div class="count"><p id="valdrink"></p></div>';
-        
-        document.querySelectorAll('.box-todo')[1].innerHTML =tag;
-        document.querySelectorAll('.todos')[1].style.backgroundColor="";
-        document.getElementById("text-drink").innerText="Drink glass watter:";
-        document.getElementById("text-drink").style.justifyContent="";
+
+        document.querySelectorAll('.box-todo')[1].innerHTML = tag;
+        document.querySelectorAll('.todos')[1].style.backgroundColor = "";
+        document.getElementById("text-drink").innerText = "Drink glass of water:";
+        document.getElementById("text-drink").style.justifyContent = "";
 
 
         document.querySelector('#valdrink').innerHTML = getCDrink();
@@ -260,21 +244,21 @@ function updateHydration(hoursPassed, today) {
         document.getElementById("drink").onclick = onHydrateClicked;
     }
 
-    if (getHydration() < HYDRATION_MIN_VALUE){
+    if (getHydration() < HYDRATION_MIN_VALUE) {
         localStorage.setItem("drink", 3);
         let tag = '<div class="count"><span>+</span><p id="valdrink"></p></div>';
-        
-        document.querySelectorAll('.box-todo')[1].innerHTML =tag;
-        document.querySelectorAll('.todos')[1].style.backgroundColor="";
-        document.getElementById("text-drink").innerText="Drink glass watter:";
-        document.getElementById("text-drink").style.justifyContent="";
+
+        document.querySelectorAll('.box-todo')[1].innerHTML = tag;
+        document.querySelectorAll('.todos')[1].style.backgroundColor = "";
+        document.getElementById("text-drink").innerText = "Drink glass of water:";
+        document.getElementById("text-drink").style.justifyContent = "";
 
 
         document.querySelector('#valdrink').innerHTML = getCDrink();
         document.getElementById("drink").classList.remove('press');
         document.getElementById("drink").onclick = onHydrateClicked;
     }
-    
+
     const newhydration = linearDecay(getHydration(), HIDRAT_DECAY_PER_HOUR, hoursPassed);
     saveHydration(newhydration);
 }
@@ -290,10 +274,18 @@ function updatePower(hoursPassed) {
         savePower(newPower);
     }
 }
+
+function setSleeping() {
+    if (localStorage.getItem("sleeping") == 1) {
+        sleeping = true;
+    } else {
+        sleeping = false;
+    }
+}
 //------------------------------------------------------------------------------
 
 
-//------------------------------  TIME FUNKTIONS  ------------------------------
+//------------------------------  TIME FUNCTIONS  ------------------------------
 
 function getHoursPassedSinceLastTimestamp() {
     return (currentTimestampInSeconds() - localStorage.getItem("last_timestamp")) / 3600
@@ -309,7 +301,7 @@ function currentTimestampInSeconds() {
 //--------------------------------------------------------------------------------
 
 
-//------------------------------- VALUE FUNKTIONS---------------------------------
+//------------------------------- VALUE FUNCTIONS---------------------------------
 /**
  * Linear ascend formula N(t) = N0 + a * t
  * @param {number} currentValue N0
@@ -328,28 +320,28 @@ function linearAscend(currentValue, ascendPerHour, hour) {
  * @param {number} hour t
  * @returns Current value
  */
- function linearDecay(currentValue, decayPerHour, hour) {
+function linearDecay(currentValue, decayPerHour, hour) {
     return currentValue - decayPerHour * hour;
 }
 //--------------------------------------------------------------------------------
 
 
-//----------------------------  ONCLICK FUNKTIONS  -------------------------------
+//----------------------------  ONCLICK FUNCTIONS  -------------------------------
 
 //FOOD
 function onFeedClicked() {
     if (!sleeping) {
-        doIt(getCMeal(),"meal");
+        doIt(getCMeal(), "meal");
         document.querySelector('#valmeal').innerHTML = getCMeal();;
         saveFood(DEFAULT_MAX_VALUE);
         refresh();
     }
 }
 
-//WATTER
+//WATER
 function onHydrateClicked() {
-    if(!sleeping){
-        doIt(getCDrink(),"drink");
+    if (!sleeping) {
+        doIt(getCDrink(), "drink");
         document.querySelector('#valdrink').innerHTML = getCDrink();
         saveHydration(DEFAULT_MAX_VALUE);
         refresh();
@@ -377,7 +369,7 @@ function onExerciseClicked() {
 //--------------------------------------------------------------------------------
 
 
-//---------------------------- OTHERS FUNKTIONS ----------------------------------
+//---------------------------- OTHERS FUNCTIONS ----------------------------------
 
 function sleep() {
     localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
@@ -402,7 +394,7 @@ function onEditName() {
 //--------------------------------------------------------------------------------
 
 
-//-------------------------- BUTTONS FUNKTIONS -----------------------------------
+//-------------------------- BUTTONS FUNCTIONS -----------------------------------
 function setButtonDonw() {
     document.getElementById("feed").classList.add('press');
     document.getElementById("drink").classList.add('press');
@@ -415,42 +407,42 @@ function setButtonUp() {
     document.getElementById("make-sport").classList.remove('press');
 }
 
-function setButtons(){// when toDo it's doing
+function setButtons() {// when toDo it's doing
     let tag = '<samp style="font-size:30px">&#128516 </samp>'
     tag += '<samp style="font-size:30px">&#128077</samp>';
 
-    if(getCMeal() == 0 ) { // to much eat
+    if (getCMeal() == 0) { // to much eat
         let element = document.getElementById("feed");
         element.classList.add('press');
         element.onclick = "";
 
         element = document.getElementById("text-meal");
-        element.innerText="You did it!";
-        element.style.display="flex";
-        element.style.justifyContent="center";
-        
+        element.innerText = "You did it!";
+        element.style.display = "flex";
+        element.style.justifyContent = "center";
+
         document.querySelectorAll('.box-todo')[0].innerHTML = tag;
 
         element = document.querySelectorAll('.todos')[0];
-        element.style.backgroundColor="aqua";
-        element.style.borderRadius="15px 30px";
+        element.style.backgroundColor = "aqua";
+        element.style.borderRadius = "15px 30px";
     }
 
-    if(getCDrink() == 0 ) { // to much drink
+    if (getCDrink() == 0) { // to much drink
         let element = document.getElementById("drink");
         element.classList.add('press');
         element.onclick = "";
 
         element = document.getElementById("text-drink");
-        element.innerText="You did it!";
-        element.style.display="flex";
-        element.style.justifyContent="center";
-        
+        element.innerText = "You did it!";
+        element.style.display = "flex";
+        element.style.justifyContent = "center";
+
         document.querySelectorAll('.box-todo')[1].innerHTML = tag;
 
         element = document.querySelectorAll('.todos')[1];
-        element.style.backgroundColor="aqua";
-        element.style.borderRadius="15px 30px";
+        element.style.backgroundColor = "aqua";
+        element.style.borderRadius = "15px 30px";
     }
 }
 //--------------------------------------------------------------------------------

@@ -12,8 +12,7 @@ const POWER_FIT_TO_WAKE_UP_VALUE = 20;
 
 // --------------------------------------------------------------------------
 
-
-// ------------------------- FOOD FUNKTIONS ---------------------------------
+// ------------------------- FOOD FUNCTIONS ---------------------------------
 function getFood() {
     let food = localStorage.getItem("food");
     if (food === null) {
@@ -35,7 +34,7 @@ function saveFood(value) {
 // --------------------------------------------------------------------------
 
 
-// ------------------------- HYDRATION FUNKTIONS ---------------------------------
+// ------------------------- HYDRATION FUNCTIONS ---------------------------------
 function getHydration() {
     let hydration = localStorage.getItem("hydration");
     if (hydration === null) {
@@ -57,7 +56,7 @@ function saveHydration(value) {
 // --------------------------------------------------------------------------
 
 
-// ------------------------ POWER FUNKTIONS ---------------------------------
+// ------------------------ POWER FUNCTIONS ---------------------------------
 function getPower() {
     let power = localStorage.getItem("power");
     if (power === null) {
@@ -79,7 +78,7 @@ function savePower(value) {
 // --------------------------------------------------------------------------
 
 
-// ------------------------ SPORT FUNKTIONS ---------------------------------
+// ------------------------ SPORT FUNCTIONS ---------------------------------
 function addExerciseDate(date) {
     const savedExerciseDates = getExerciseDates();
 
@@ -112,7 +111,7 @@ function getExerciseDates() {
 // --------------------------------------------------------------------------
 
 
-// ------------------------- NAME FUNKTIONS ---------------------------------
+// ------------------------- NAME FUNCTIONS ---------------------------------
 function saveName(newName) {
     if (newName === null | newName ==''){
         return;
@@ -126,7 +125,7 @@ function getName() {
 // --------------------------------------------------------------------------
 
 
-// ------------------------- TIME FUNKTIONS ---------------------------------
+// ------------------------- TIME FUNCTIONS ---------------------------------
 
 function isToday(date) {
     const today = new Date();
@@ -154,7 +153,7 @@ function isDateInThisWeek(date) {
 
 
 
-// ----------------------- COUNTERS FUNKTIONS -------------------------------
+// ----------------------- COUNTERS FUNCTIONS -------------------------------
 function getCMeal() {
     let m = localStorage.getItem("meal"); 
     if(m === null) {

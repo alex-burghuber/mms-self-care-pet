@@ -1,112 +1,115 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MMS Self-care Pet</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="banner-wrapper"></div>
-        <div id="root">
-            <div id="h1">
-                
-            </div>
-            <div id="header">
-                <div id="central_panel" class="panel">
-                    <h1 id="name" onclick="onEditName()" title="Give your pet a name!">COOL NAME</h1>
-                    <div id="bars">
-                        <div class="bar">
-                            <span>Food 🍴</span>
-                            <progress class="progres" id="foodBar" value="0" max="100"></progress>
-                        </div>
-                        <div class="bar"> 
-                            <span>Hydration 💧</span>
-                            <progress class="progres" id="hydrationBar" value="0" max="100"></progress>
-                        </div>
-                        <div class="bar">
-                            <span>Power 🔋</span>
-                            <progress class="progres" id="powerBar" value="0" max="100"></progress>
-                        </div>
-    
-                        <div class="bar">
-                            <samp>Sport 3x per week 💪</samp>
-                            <div class="progres">
-                                <div id="p1" class="circle"></div>
-                                <div id="p2" class="circle"></div>
-                                <div id="p3" class="circle"></div>
-                            </div>                           
-                        </div> 
-                    </div>
-                </div>
-                
-            </div>
-            <div id="content">
-                <div id="left-actions">
-                    <div id="left_panel" class="panel">
-                        <h1 style="line-height: 6vh; font-size:1.4em; font-weight: 800;">ToDo's</h1>
-                        <div id="quest">
-                            <div class="todos" >
-                                <span id="text-meal">Eat healthy meal:</span>
 
-                                <div class="box-todo"> 
-                                    <div class="count">
-                                        <p id="valmeal"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="todos">
-                                <span id="text-drink">Drink glass water:</span>
-                                <div class="box-todo">
-                                    <div class="count">
-                                        <p id="valdrink"></p>  
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="todos">
-                                <form action="" >
-                                    <div id="brush-teeth">
-                                        <span style="height: 3vh;">Brush teeth:</span>
-                                        
-                                        <div class="check">
-                                            <label for="morning">Morning</label>
-                                            <input id="morning" type="checkbox">
-                                        </div>
-                          
-                                        <div class="check">
-                                            <label for="evening" style="font-size: 0.9em;">Evening</label>
-                                            <input id="evening" type="checkbox">
-                                        </div>
-                                    </div>
-                                </form>
-                                
-                                <form>
-                                    <div class="check" style="margin: 0;">
-                                        <label for="hw">Homework</label>
-                                        <input id="hw" type="checkbox">
-                                    </div>
-                                </form>
-                            </div>
+<head>
+    <title>MMS Self-care Pet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="banner-wrapper"></div>
+    <div id="root">
+        <div id="h1">
+
+        </div>
+        <div id="header">
+            <div id="central_panel" class="panel">
+                <h1 id="name" onclick="onEditName()" title="Give your pet a name!">COOL NAME</h1>
+                <div id="bars">
+                    <div class="bar">
+                        <span>Food 🍴</span>
+                        <progress class="progres" id="foodBar" value="0" max="100"></progress>
+                    </div>
+                    <div class="bar">
+                        <span>Hydration 💧</span>
+                        <progress class="progres" id="hydrationBar" value="0" max="100"></progress>
+                    </div>
+                    <div class="bar">
+                        <span>Power 🔋</span>
+                        <progress class="progres" id="powerBar" value="0" max="100"></progress>
+                    </div>
+
+                    <div class="bar">
+                        <samp>Sport 3x per week 💪</samp>
+                        <div class="progres">
+                            <div id="p1" class="circle"></div>
+                            <div id="p2" class="circle"></div>
+                            <div id="p3" class="circle"></div>
                         </div>
                     </div>
-                    
-                </div>
-                <div id="pet-wrapper">
-                    <img id="rabbit" src="images/rabbit_idle.gif">
-                </div>
-                <div id="right-actions">
-                    <button id="feed" class="button" onclick="onFeedClicked()">Feed</button>
-                    <button id="drink" class="button" onclick="onHydrateClicked()">Drink Water</button>
-                    <button id="sleep-or-wake-up" class="button" class="sleep" onclick="onSleepOrWakeUpClicked()"></button>
-                    <button id="make-sport" class="button" onclick="onExerciseClicked()">Exercise</button>              
                 </div>
             </div>
-            <div id="bottom">
-                <h5>This is a projekt for MMS 2022 </h5>
-                <p>
-                    by Aleana Takacs, Arij Adbullah, Alexander Burghuber, Julius Baischer, Daniel Aparicio
-                </p>
+
+        </div>
+        <div id="content">
+            <div id="left-actions">
+                <div id="left_panel" class="panel">
+                    <h1 style="line-height: 6vh; font-size:1.4em; font-weight: 800;">ToDo's</h1>
+                    <div id="quest">
+                        <div class="todos">
+                            <span id="text-meal">Eat healthy meal:</span>
+
+                            <div class="box-todo">
+                                <div class="count">
+                                    <p id="valmeal"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="todos">
+                            <span id="text-drink">Drink glass water:</span>
+                            <div class="box-todo">
+                                <div class="count">
+                                    <p id="valdrink"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="todos">
+                            <form action="">
+                                <div id="brush-teeth">
+                                    <span style="height: 3vh;">Brush teeth:</span>
+
+                                    <div class="check">
+                                        <label for="morning">Morning</label>
+                                        <input id="morning" type="checkbox">
+                                    </div>
+
+                                    <div class="check">
+                                        <label for="evening" style="font-size: 0.9em;">Evening</label>
+                                        <input id="evening" type="checkbox">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form>
+                                <div class="check" style="margin: 0;">
+                                    <label for="hw">Homework</label>
+                                    <input id="hw" type="checkbox">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="pet-wrapper">
+                <img id="rabbit" src="images/rabbit_idle.gif">
+            </div>
+            <div id="right-actions">
+                <button id="feed" class="button" onclick="onFeedClicked()">Feed</button>
+                <button id="drink" class="button" onclick="onHydrateClicked()">Drink Water</button>
+                <button id="sleep-or-wake-up" class="button" class="sleep" onclick="onSleepOrWakeUpClicked()"></button>
+                <button id="make-sport" class="button" onclick="onExerciseClicked()">Exercise</button>
             </div>
         </div>
-    </body>
-    <script src="storage.js"></script>
-    <script src="main.js"></script>
+        <div id="bottom">
+            <h5>This is a projekt for MMS 2022 </h5>
+            <p>
+                by Aleana Takacs, Arij Adbullah, Alexander Burghuber, Julius Baischer, Daniel Aparicio
+            </p>
+        </div>
+    </div>
+</body>
+<script src="storage.js"></script>
+<script src="main.js"></script>
+
 </html>
