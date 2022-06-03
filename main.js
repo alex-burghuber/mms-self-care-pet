@@ -218,6 +218,21 @@ function updateFood(hoursPassed, today) {
         document.getElementById("feed").classList.remove('press');
         document.getElementById("feed").onclick = onFeedClicked;
     }
+
+    if (getFood() < FOOD_MIN_VALUE){
+        localStorage.setItem("meal", 1);
+
+        let tag = '<div class="count"><span>+ </span><p id="valmeal"></p></div>';
+
+        document.querySelectorAll('.box-todo')[0].innerHTML =tag;
+        document.querySelectorAll('.todos')[0].style.backgroundColor="";
+        document.getElementById("text-meal").innerText="Eat healthy meal:";
+        document.getElementById("text-meal").style.justifyContent="";
+
+        document.querySelector('#valmeal').innerHTML = getCMeal();
+        document.getElementById("feed").classList.remove('press');
+        document.getElementById("feed").onclick = onFeedClicked;
+    }
     const newFood = linearDecay(getFood(), FOOD_DECAY_PER_HOUR, hoursPassed);
     saveFood(newFood);
     
@@ -233,6 +248,21 @@ function updateHydration(hoursPassed, today) {
     if (day != today) { // new day
         localStorage.setItem("drink", 10);
         let tag = '<div class="count"><p id="valdrink"></p></div>';
+        
+        document.querySelectorAll('.box-todo')[1].innerHTML =tag;
+        document.querySelectorAll('.todos')[1].style.backgroundColor="";
+        document.getElementById("text-drink").innerText="Drink glass watter:";
+        document.getElementById("text-drink").style.justifyContent="";
+
+
+        document.querySelector('#valdrink').innerHTML = getCDrink();
+        document.getElementById("drink").classList.remove('press');
+        document.getElementById("drink").onclick = onHydrateClicked;
+    }
+
+    if (getHydration() < HYDRATION_MIN_VALUE){
+        localStorage.setItem("drink", 3);
+        let tag = '<div class="count"><span>+</span><p id="valdrink"></p></div>';
         
         document.querySelectorAll('.box-todo')[1].innerHTML =tag;
         document.querySelectorAll('.todos')[1].style.backgroundColor="";
