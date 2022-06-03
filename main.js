@@ -4,7 +4,7 @@
 const FOOD_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*3; // Assumes food is empty (for a meal) 24/3 (3 meal at day)
 const HIDRAT_DECAY_PER_HOUR = (DEFAULT_MAX_VALUE / 24)*8; // Assumes food is empty (for a glass) 24/8 (8 glass at day)
 
-const POWER_DECAY_PER_HOUR = DECAY_PER_HOUR/24 // is empty at end of the day
+const POWER_DECAY_PER_HOUR = DEFAULT_MAX_VALUE/24 // is empty at end of the day
 const POWER_ASCEND_PER_HOUR = DEFAULT_MAX_VALUE / 8; // Assumes power is full after 8 hours
 
 
