@@ -318,10 +318,6 @@ function onExerciseClicked() {
 }
 
 
-function decrementMeal() {
-
-}
-
 function sleep() {
     localStorage.setItem("sleeping", 1); //for set sleeping when reload the page
     sleeping = true;
@@ -355,7 +351,7 @@ function setButtonUp() {
     document.getElementById("make-sport").classList.remove('press');
 }
 
-
+// when toDo it's doing
 function setButtons(){
     let tag = '<samp style="font-size:30px">&#128516 </samp>'
     tag += '<samp style="font-size:30px">&#128077</samp>';
@@ -367,13 +363,9 @@ function setButtons(){
         document.getElementById("text-meal").style.display="flex";
         document.getElementById("text-meal").style.justifyContent="center";
         
-
         document.querySelectorAll('.box-todo')[0].innerHTML = tag;
         document.querySelectorAll('.todos')[0].style.backgroundColor="aqua";
         document.querySelectorAll('.todos')[0].style.borderRadius="15px 30px";
-        
-
-
     }
 
     if(getCDrink() == 0 ) { // to much drink
@@ -387,6 +379,5 @@ function setButtons(){
         document.querySelectorAll('.box-todo')[1].innerHTML = tag;
         document.querySelectorAll('.todos')[1].style.backgroundColor="aqua";
         document.querySelectorAll('.todos')[1].style.borderRadius="15px 30px";
-
     }
 }

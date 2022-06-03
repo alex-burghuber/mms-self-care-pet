@@ -166,12 +166,13 @@ body {
     top: 0;
 
     width: 25vw;
-    height: 12.5vh;
+    height: 15vh;
 
-    border: 2px solid chocolate;
+    border: 2px solid  chocolate ;
     border-radius: 40px;
     box-shadow: 3px 3px 4px 2px black;
-    background-color: burlywood;
+    background-image: linear-gradient(to bottom right,
+                        burlywood , burlywood, antiquewhite);
 }
 
 .banner-anim {
@@ -224,11 +225,15 @@ body {
     background-color: burlywood;
 }
 
-h1{
+#name{
     font-size: 1.6em;
     font-weight: bolder;
     line-height: 4vh;
     text-shadow: 2px 2px 2px grey;
+}
+
+#name:hover{
+    cursor: pointer;
 }
 
 #bars {
@@ -405,7 +410,10 @@ progress[value]::-webkit-progress-value {
 .button:hover {
     background-color: #83a9cc;
     color: #FFF;
+    cursor:pointer;
 }
+
+
 
 .button:active {
     box-shadow: 3px 5px rgb(50, 60, 100) inset;

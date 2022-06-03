@@ -97,6 +97,9 @@ function getExerciseDates() {
 }
 
 function saveName(newName) {
+    if (newName === null | newName ==''){
+        return;
+    }
     localStorage.setItem("name", newName);
 }
 
