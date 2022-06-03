@@ -207,10 +207,12 @@ function updateFood(hoursPassed, today) {
         saveFood(DEFAULT_MAX_VALUE);
         localStorage.setItem("meal", 5);
 
-        let tag = '<div class="count"><p id="valmeal"></p></div>'
+        let tag = '<div class="count"><p id="valmeal"></p></div>';
+
         document.querySelectorAll('.box-todo')[0].innerHTML =tag;
         document.querySelectorAll('.todos')[0].style.backgroundColor="";
         document.getElementById("text-meal").innerText="Eat healthy meal:";
+        document.getElementById("text-meal").style.justifyContent="";
 
         document.querySelector('#valmeal').innerHTML = getCMeal();
         document.getElementById("feed").classList.remove('press');
@@ -230,10 +232,14 @@ function updateHydration(hoursPassed, today) {
     }
     if (day != today) { // new day
         localStorage.setItem("drink", 10);
-        let tag = '<div class="count"><p id="valdrink"></p></div>'
-        document.getElementById("box-drink").innerHTML =tag;
+        let tag = '<div class="count"><p id="valdrink"></p></div>';
+        
+        document.querySelectorAll('.box-todo')[1].innerHTML =tag;
         document.querySelectorAll('.todos')[1].style.backgroundColor="";
         document.getElementById("text-drink").innerText="Drink glass watter:";
+        document.getElementById("text-drink").style.justifyContent="";
+
+
         document.querySelector('#valdrink').innerHTML = getCDrink();
         document.getElementById("drink").classList.remove('press');
         document.getElementById("drink").onclick = onHydrateClicked;
@@ -247,7 +253,7 @@ function updateHydration(hoursPassed, today) {
 //POWER
 function updatePower(hoursPassed) {
     if (sleeping) {
-        const newPower = linearAscend(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
+        const newPower = linearAscend(getPower(), POWER_ASCEND_PER_HOUR*1000, hoursPassed);
         savePower(newPower);
     } else {
         const newPower = linearDecay(getPower(), POWER_DECAY_PER_HOUR, hoursPassed);
@@ -382,30 +388,39 @@ function setButtonUp() {
 function setButtons(){// when toDo it's doing
     let tag = '<samp style="font-size:30px">&#128516 </samp>'
     tag += '<samp style="font-size:30px">&#128077</samp>';
-    if(getCMeal() == 0 ) { // to much eat
-        document.getElementById("feed").classList.add('press');
-        document.getElementById("feed").onclick = "";
 
-        document.getElementById("text-meal").innerText="You did it!";
-        document.getElementById("text-meal").style.display="flex";
-        document.getElementById("text-meal").style.justifyContent="center";
+    if(getCMeal() == 0 ) { // to much eat
+        let element = document.getElementById("feed");
+        element.classList.add('press');
+        element.onclick = "";
+
+        element = document.getElementById("text-meal");
+        element.innerText="You did it!";
+        element.style.display="flex";
+        element.style.justifyContent="center";
         
         document.querySelectorAll('.box-todo')[0].innerHTML = tag;
-        document.querySelectorAll('.todos')[0].style.backgroundColor="aqua";
-        document.querySelectorAll('.todos')[0].style.borderRadius="15px 30px";
+
+        element = document.querySelectorAll('.todos')[0];
+        element.style.backgroundColor="aqua";
+        element.style.borderRadius="15px 30px";
     }
 
     if(getCDrink() == 0 ) { // to much drink
-        document.getElementById("drink").classList.add('press');
-        document.getElementById("drink").onclick = "";
+        let element = document.getElementById("drink");
+        element.classList.add('press');
+        element.onclick = "";
 
-        document.getElementById("text-drink").innerText="You did it!";
-        document.getElementById("text-drink").style.display="flex";
-        document.getElementById("text-drink").style.justifyContent="center";
-
+        element = document.getElementById("text-drink");
+        element.innerText="You did it!";
+        element.style.display="flex";
+        element.style.justifyContent="center";
+        
         document.querySelectorAll('.box-todo')[1].innerHTML = tag;
-        document.querySelectorAll('.todos')[1].style.backgroundColor="aqua";
-        document.querySelectorAll('.todos')[1].style.borderRadius="15px 30px";
+
+        element = document.querySelectorAll('.todos')[1];
+        element.style.backgroundColor="aqua";
+        element.style.borderRadius="15px 30px";
     }
 }
 //--------------------------------------------------------------------------------
